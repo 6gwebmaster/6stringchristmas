@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import backgroundImage from "figma:asset/03135be46c4cb7673dcd56b59eb7aed66d11586c.png";
 import logoImage from "figma:asset/7093121508f4e8472b47ab0536d669c9003e4afe.png";
 import chaseImage from "figma:asset/0112d34f09af9f1f8e16a7be363ea4e6d6deec56.png";
+import { Snow } from "./Snow";
 
 export function Hero() {
   const [scrollY, setScrollY] = useState(0);
@@ -31,6 +32,9 @@ export function Hero() {
           className="w-full h-full object-cover"
         />
       </div>
+
+      {/* Animated Snow Effect */}
+      <Snow />
 
       {/* Main Content Container - Desktop: Side by Side, Mobile: Stacked */}
       <div className="relative z-10 w-full h-full px-4 lg:px-8">

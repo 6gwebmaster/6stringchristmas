@@ -16,7 +16,16 @@ export function Contact() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl mb-6 text-red-800 uppercase font-bold">Contact</h2>
+            <h2 
+              className="text-4xl md:text-5xl mb-6 text-red-800 uppercase font-bold"
+              style={{ 
+                fontFamily: '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
+                letterSpacing: '0.15em',
+                textShadow: '2px 2px 4px rgba(220, 38, 38, 0.2)'
+              }}
+            >
+              Contact
+            </h2>
             <p className="text-xl text-gray-700 max-w-3xl mx-auto">
               Have questions about the show or interested in booking a private performance?
             </p>

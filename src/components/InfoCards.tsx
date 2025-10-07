@@ -1,3 +1,4 @@
+import React from "react";
 import { Card, CardContent } from "./ui/card";
 import { motion } from "motion/react";
 import laughingIcon from "figma:asset/4c0c36a5a9be457f3eb590370077d736fa053215.png";
