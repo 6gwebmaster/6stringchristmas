@@ -10,10 +10,13 @@ export function Snow() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // Set canvas size
+    // Set canvas size based on parent container
     const resizeCanvas = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      const parent = canvas.parentElement;
+      if (parent) {
+        canvas.width = parent.offsetWidth;
+        canvas.height = parent.offsetHeight;
+      }
     };
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
@@ -30,15 +33,15 @@ export function Snow() {
 
     // Create snowflakes
     const createSnowflakes = () => {
-      const count = Math.floor((canvas.width * canvas.height) / 15000); // Density based on screen size
+      const count = Math.floor((canvas.width * canvas.height) / 10000); // Density based on screen size
       for (let i = 0; i < count; i++) {
         snowflakes.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
-          radius: Math.random() * 3 + 1,
-          speed: Math.random() * 1 + 0.5,
+          radius: Math.random() * 4 + 2, // Larger snowflakes (2-6px)
+          speed: Math.random() * 1.5 + 0.5,
           drift: Math.random() * 0.5 - 0.25,
-          opacity: Math.random() * 0.6 + 0.3
+          opacity: Math.random() * 0.4 + 0.6 // More opaque (0.6-1.0)
         });
       }
     };
@@ -49,10 +52,17 @@ export function Snow() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       snowflakes.forEach((flake) => {
+        // Add shadow for better visibility
+        ctx.shadowBlur = 3;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        
         ctx.beginPath();
         ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
         ctx.fill();
+        
+        // Reset shadow
+        ctx.shadowBlur = 0;
 
         // Update position
         flake.y += flake.speed;
@@ -82,8 +92,7 @@ export function Snow() {
   return (
     <canvas
       ref={canvasRef}
-      className="fixed top-0 left-0 w-full h-full pointer-events-none z-[5]"
-      style={{ mixBlendMode: 'screen' }}
+      className="absolute top-0 left-0 w-full h-full pointer-events-none z-[5]"
     />
   );
 }

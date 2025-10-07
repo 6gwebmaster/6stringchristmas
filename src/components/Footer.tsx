@@ -1,3 +1,5 @@
+import { Snow } from "./Snow";
+
 export function Footer() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -8,7 +10,8 @@ export function Footer() {
 
   return (
     <footer className="relative bg-red-900 text-white py-12 z-[1]">
-      <div className="container mx-auto px-4">
+      <Snow />
+      <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8">
             {/* Brand */}
@@ -23,7 +26,7 @@ export function Footer() {
                   href="https://www.facebook.com/chasethatpadgett" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-red-200 hover:text-yellow-400 transition-colors cursor-pointer"
+                  className="text-red-200 hover:text-yellow-400 hover:scale-125 transition-all duration-200 cursor-pointer"
                   aria-label="Visit our Facebook page"
                   style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
                 >
@@ -35,7 +38,7 @@ export function Footer() {
                   href="https://www.instagram.com/chasethatpadgett/" 
                   target="_blank" 
                   rel="noopener noreferrer" 
-                  className="text-red-200 hover:text-yellow-400 transition-colors cursor-pointer"
+                  className="text-red-200 hover:text-yellow-400 hover:scale-125 transition-all duration-200 cursor-pointer"
                   aria-label="Visit our Instagram page"
                   style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
                 >
@@ -54,7 +57,7 @@ export function Footer() {
                   <a 
                     href="#home" 
                     onClick={(e) => { e.preventDefault(); scrollToSection('home'); }}
-                    className="text-red-200 hover:text-yellow-400 transition-colors cursor-pointer"
+                    className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
                     style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
                   >
                     Home
@@ -64,7 +67,7 @@ export function Footer() {
                   <a 
                     href="#about" 
                     onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}
-                    className="text-red-200 hover:text-yellow-400 transition-colors cursor-pointer"
+                    className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
                     style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
                   >
                     About
@@ -74,7 +77,7 @@ export function Footer() {
                   <a 
                     href="#shows" 
                     onClick={(e) => { e.preventDefault(); scrollToSection('shows'); }}
-                    className="text-red-200 hover:text-yellow-400 transition-colors cursor-pointer"
+                    className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
                     style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
                   >
                     Get Tickets
@@ -84,7 +87,7 @@ export function Footer() {
                   <a 
                     href="#contact" 
                     onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
-                    className="text-red-200 hover:text-yellow-400 transition-colors cursor-pointer"
+                    className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
                     style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
                   >
                     Contact
@@ -100,7 +103,7 @@ export function Footer() {
                 <li>
                   <a 
                     href="mailto:Management@chasepadgett.com" 
-                    className="text-red-200 hover:text-yellow-400 transition-colors cursor-pointer"
+                    className="text-red-200 hover:text-yellow-400 hover:scale-105 hover:font-bold transition-all duration-200 cursor-pointer"
                     style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
                   >
                     Management@chasepadgett.com
