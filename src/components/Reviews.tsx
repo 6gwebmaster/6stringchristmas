@@ -54,6 +54,16 @@ export function Reviews() {
             >
               Reviews
             </motion.h2>
+            <motion.p 
+              className="text-2xl text-gray-700 max-w-5xl mx-auto" 
+              style={{ fontFamily: '"Zain", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
+              Hear what audiences have to say about the show.
+            </motion.p>
           </motion.div>
 
           {/* Reviews Grid */}

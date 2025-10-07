@@ -146,7 +146,7 @@ export function Gallery() {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              Experience the magic of 6 String Christmas through these moments from past performances
+              Experience the magic of 6 String Christmas through these moments from past performances.
             </motion.p>
           </motion.div>
 

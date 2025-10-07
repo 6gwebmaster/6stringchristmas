@@ -26,7 +26,10 @@ export function Contact() {
             >
               Contact
             </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            <p 
+              className="text-2xl text-gray-700 max-w-5xl mx-auto"
+              style={{ fontFamily: '"Zain", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}
+            >
               Have questions about the show or interested in booking a private performance?
             </p>
           </div>

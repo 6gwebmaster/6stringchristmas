@@ -54,6 +54,12 @@ export function Shows() {
             >
               Shows
             </h2>
+            <p 
+              className="text-2xl text-gray-700 max-w-5xl mx-auto" 
+              style={{ fontFamily: '"Zain", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}
+            >
+              Book your tickets today!
+            </p>
           </div>
 
           <div className="space-y-4 mb-16 max-w-6xl mx-auto">

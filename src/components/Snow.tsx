@@ -41,7 +41,7 @@ export function Snow() {
           radius: Math.random() * 4 + 2, // Larger snowflakes (2-6px)
           speed: Math.random() * 1.5 + 0.5,
           drift: Math.random() * 0.5 - 0.25,
-          opacity: Math.random() * 0.4 + 0.6 // More opaque (0.6-1.0)
+          opacity: Math.random() * 0.25 + 0.25 // Lighter, more transparent (0.25-0.5)
         });
       }
     };
@@ -53,8 +53,8 @@ export function Snow() {
 
       snowflakes.forEach((flake) => {
         // Add shadow for better visibility
-        ctx.shadowBlur = 3;
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.3)';
+        ctx.shadowBlur = 2;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.1)';
         
         ctx.beginPath();
         ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
