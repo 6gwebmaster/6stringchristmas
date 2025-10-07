@@ -43,10 +43,10 @@ export function InfoCards() {
                 ease: "easeOut"
               }}
             >
-              <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-0 hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 h-60">
+              <Card className="bg-white/95 backdrop-blur-sm shadow-2xl border-0 hover:shadow-3xl transition-all duration-300 hover:-translate-y-2 h-80">
                 <CardContent className="p-8 text-center h-full flex flex-col justify-center">
                   <div className={`w-16 h-16 ${card.bgColor} rounded-full flex items-center justify-center mx-auto mb-6`}>
-                    <span style={{ fontSize: '32px', lineHeight: '32px' }}>{card.icon}</span>
+                    <span style={{ fontSize: '36px', lineHeight: '36px' }}>{card.icon}</span>
                   </div>
                   <h4 
                     className={`text-3xl md:text-xl mb-4 ${card.textColor}`}
@@ -63,8 +63,8 @@ export function InfoCards() {
                   <p 
                     className="hidden md:block text-gray-600 leading-relaxed flex-1 flex items-center"
                     style={{
-                      fontFamily: '"Roboto", "Helvetica Neue", Arial, sans-serif',
-                      fontSize: '1rem',
+                      fontFamily: '"Zain", "Roboto", "Helvetica Neue", Arial, sans-serif',
+                      fontSize: '1.25rem',
                       fontWeight: '400',
                       letterSpacing: '0.01em'
                     }}

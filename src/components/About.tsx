@@ -35,11 +35,11 @@ export function About() {
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h2 
-              className="text-4xl md:text-5xl mb-6 text-red-800 uppercase font-bold"
+              className="text-4xl md:text-5xl mb-8 text-red-800 uppercase font-bold"
               style={{ 
                 fontFamily: '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
                 letterSpacing: '0.15em',
-                textShadow: '2px 2px 4px rgba(220, 38, 38, 0.2)'
+                textShadow: '2px 2px 4px rgba(220, 38, 38, 0.2), 4px 0 8px rgba(255, 215, 0, 0.6), 8px 0 12px rgba(255, 255, 0, 0.3), 12px 0 16px rgba(255, 215, 0, 0.1)'
               }}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}
@@ -49,28 +49,29 @@ export function About() {
               About
             </motion.h2>
             <motion.p 
-              className="text-xl text-gray-700 max-w-3xl mx-auto font-medium mb-6"
+              className="text-2xl text-gray-700 max-w-3xl mx-auto font-medium mb-10"
+              style={{ fontFamily: '"Mogra", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.4 }}
             >
-              A Fun & Funny Musical Romp for the Holiday Season
+              <motion.span
+                className="inline-block"
+                initial={{ rotate: 0 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, ease: "easeInOut", delay: 0 }}
+              >
+                ⭐
+              </motion.span> Christmas Comedy Meets Musical Magic <motion.span
+                className="inline-block"
+                initial={{ rotate: 0 }}
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, ease: "easeInOut", delay: 0.1 }}
+              >
+                ⭐
+              </motion.span>
             </motion.p>
-            <motion.div
-              className="flex justify-center"
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.5 }}
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="inline-block bg-gradient-to-r from-red-100 to-green-100 px-6 py-3 rounded-full">
-                <p className="text-lg font-bold text-red-800">
-                  ✨ Perfect for all ages! ✨
-                </p>
-              </div>
-            </motion.div>
           </motion.div>
 
           {/* Content Grid with Animations */}
@@ -84,8 +85,7 @@ export function About() {
               transition={{ duration: 0.8, ease: "easeOut" }}
             >
               <div className="relative">
-                <div className="absolute -left-4 top-0 text-6xl text-red-300 opacity-30 font-serif leading-none">"</div>
-                <p className="text-lg text-gray-700 leading-relaxed relative z-10 pl-6">
+                <p className="text-2xl text-gray-700 leading-relaxed relative z-10" style={{ fontFamily: '"Zain", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}>
                   Chase Padgett brings his prodigious talents as a singer, guitarist, comedian, and 
                   storyteller to this unforgettable evening of Christmas spirit. This show is stuffed like a stocking 
                   with timeless Christmas music as well as tons of jokes and stories about how Christmas changed 
@@ -99,9 +99,9 @@ export function About() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: 0.3 }}
               >
-                <p className="text-lg text-gray-700 leading-relaxed">
+                <p className="text-2xl text-gray-700 leading-relaxed" style={{ fontFamily: '"Zain", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}>
                   His blazing guitar work, lighting fast wit, and surprisingly soulful singing 
-                  voice will remind any audience why Christmas is such a special time of year.
+                  voice will remind any audience why Christmas is such a special time of year. <span className="text-red-800 font-bold">✨ Perfect for all ages! ✨</span>
                 </p>
               </motion.div>
             </motion.div>
@@ -147,50 +147,6 @@ export function About() {
                   <div className="absolute top-4 left-4 text-8xl text-red-200 opacity-20 font-serif leading-none">"</div>
                   <div className="absolute bottom-4 right-4 text-8xl text-green-200 opacity-20 font-serif leading-none">"</div>
                   
-                  {/* Animated Stars Above Quote */}
-                  <div className="flex justify-center mb-4 gap-2">
-                    <motion.span
-                      className="text-4xl inline-block"
-                      initial={{ rotate: 0 }}
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, ease: "easeInOut", delay: 0 }}
-                    >
-                      ⭐
-                    </motion.span>
-                    <motion.span
-                      className="text-4xl inline-block"
-                      initial={{ rotate: 0 }}
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, ease: "easeInOut", delay: 0.1 }}
-                    >
-                      ⭐
-                    </motion.span>
-                    <motion.span
-                      className="text-4xl inline-block"
-                      initial={{ rotate: 0 }}
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, ease: "easeInOut", delay: 0.2 }}
-                    >
-                      ⭐
-                    </motion.span>
-                    <motion.span
-                      className="text-4xl inline-block"
-                      initial={{ rotate: 0 }}
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, ease: "easeInOut", delay: 0.3 }}
-                    >
-                      ⭐
-                    </motion.span>
-                    <motion.span
-                      className="text-4xl inline-block"
-                      initial={{ rotate: 0 }}
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, ease: "easeInOut", delay: 0.4 }}
-                    >
-                      ⭐
-                    </motion.span>
-                  </div>
-
                   {/* Quote Content */}
                   <motion.blockquote 
                     className="text-3xl md:text-4xl lg:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-700 to-red-900 mb-8 leading-tight relative z-10"
@@ -199,8 +155,7 @@ export function About() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.2 }}
                   >
-                    "Padgett's holiday spirit<br />
-                    shines bright"
+                    "Padgett's holiday spirit shines bright"
                   </motion.blockquote>
                   
                   {/* Logo */}
