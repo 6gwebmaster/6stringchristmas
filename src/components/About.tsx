@@ -27,8 +27,6 @@ export function About() {
       {/* Decorative Background Elements */}
       <div className="absolute top-10 left-10 text-red-200 text-6xl opacity-20 pointer-events-none">✨</div>
       <div className="absolute top-32 right-20 text-green-200 text-5xl opacity-20 pointer-events-none">🎄</div>
-      <div className="absolute bottom-20 left-32 text-blue-200 text-4xl opacity-20 pointer-events-none">❄️</div>
-      <div className="absolute bottom-40 right-10 text-red-200 text-5xl opacity-20 pointer-events-none">🎁</div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
