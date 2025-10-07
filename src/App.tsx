@@ -7,6 +7,7 @@ import { Reviews } from "./components/Reviews";
 import { Shows } from "./components/Shows";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
       <Shows />
       <Contact />
       <Footer />
+      <Analytics />
     </div>
   );
 }
