@@ -1,72 +1,89 @@
-import React from "react";
-import { motion } from "motion/react";
-
-interface SnowflakeProps {
-  delay: number;
-  duration: number;
-  size: number;
-  left: number;
-  opacity: number;
-}
-
-function Snowflake({ delay, duration, size, left, opacity }: SnowflakeProps) {
-  const horizontalDrift = Math.random() * 30 - 15; // Random drift between -15 and 15
-  
-  return (
-    <motion.div
-      className="absolute pointer-events-none top-0"
-      style={{
-        left: `${left}%`,
-        width: `${size}px`,
-        height: `${size}px`,
-        opacity: opacity,
-      }}
-      initial={{ y: -20 }}
-      animate={{
-        y: "100vh",
-        x: [0, horizontalDrift, 0],
-      }}
-      transition={{
-        duration: duration,
-        delay: delay,
-        repeat: Infinity,
-        ease: "linear",
-        x: {
-          duration: duration / 2,
-          repeat: Infinity,
-          repeatType: "reverse",
-          ease: "easeInOut",
-        }
-      }}
-    >
-      <div className="w-full h-full flex items-center justify-center">
-        <span className="text-white drop-shadow-sm" style={{ fontSize: `${size}px` }}>❄</span>
-      </div>
-    </motion.div>
-  );
-}
+import React, { useEffect, useRef } from "react";
 
 export function Snow() {
-  const snowflakes = Array.from({ length: 30 }, (_, i) => ({
-    delay: Math.random() * 8,
-    duration: 10 + Math.random() * 15, // 10-25 seconds
-    size: 10 + Math.random() * 12, // 10-22px
-    left: Math.random() * 100,
-    opacity: 0.4 + Math.random() * 0.5, // 0.4-0.9 opacity
-  }));
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size
+    const resizeCanvas = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Snowflake particles
+    const snowflakes: Array<{
+      x: number;
+      y: number;
+      radius: number;
+      speed: number;
+      drift: number;
+      opacity: number;
+    }> = [];
+
+    // Create snowflakes
+    const createSnowflakes = () => {
+      const count = Math.floor((canvas.width * canvas.height) / 15000); // Density based on screen size
+      for (let i = 0; i < count; i++) {
+        snowflakes.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 3 + 1,
+          speed: Math.random() * 1 + 0.5,
+          drift: Math.random() * 0.5 - 0.25,
+          opacity: Math.random() * 0.6 + 0.3
+        });
+      }
+    };
+    createSnowflakes();
+
+    // Animation loop
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      snowflakes.forEach((flake) => {
+        ctx.beginPath();
+        ctx.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+        ctx.fill();
+
+        // Update position
+        flake.y += flake.speed;
+        flake.x += flake.drift;
+
+        // Reset snowflake when it goes off screen
+        if (flake.y > canvas.height) {
+          flake.y = -10;
+          flake.x = Math.random() * canvas.width;
+        }
+        if (flake.x > canvas.width) {
+          flake.x = 0;
+        } else if (flake.x < 0) {
+          flake.x = canvas.width;
+        }
+      });
+
+      requestAnimationFrame(animate);
+    };
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, []);
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
-      {snowflakes.map((snowflake, index) => (
-        <Snowflake
-          key={index}
-          delay={snowflake.delay}
-          duration={snowflake.duration}
-          size={snowflake.size}
-          left={snowflake.left}
-          opacity={snowflake.opacity}
-        />
-      ))}
-    </div>
+    <canvas
+      ref={canvasRef}
+      className="fixed top-0 left-0 w-full h-full pointer-events-none z-[5]"
+      style={{ mixBlendMode: 'screen' }}
+    />
   );
 }
