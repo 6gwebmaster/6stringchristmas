@@ -39,7 +39,7 @@ export function About() {
               style={{ 
                 fontFamily: '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
                 letterSpacing: '0.15em',
-                textShadow: '2px 2px 4px rgba(220, 38, 38, 0.2), 4px 0 8px rgba(255, 215, 0, 0.6), 8px 0 12px rgba(255, 255, 0, 0.3), 12px 0 16px rgba(255, 215, 0, 0.1)'
+                textShadow: '2px 2px 0px rgba(255, 235, 59, 0.9), 3px 3px 0px rgba(255, 223, 0, 0.6)'
               }}
               initial={{ opacity: 0, scale: 0.9 }}
               whileInView={{ opacity: 1, scale: 1 }}

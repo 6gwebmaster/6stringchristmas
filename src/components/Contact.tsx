@@ -21,7 +21,7 @@ export function Contact() {
               style={{ 
                 fontFamily: '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
                 letterSpacing: '0.15em',
-                textShadow: '2px 2px 4px rgba(220, 38, 38, 0.2)'
+                textShadow: '2px 2px 0px rgba(255, 235, 59, 0.9), 3px 3px 0px rgba(255, 223, 0, 0.6)'
               }}
             >
               Contact

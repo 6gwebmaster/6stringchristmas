@@ -2,26 +2,77 @@ import { useEffect, useState } from "react";
 import { Card } from "./ui/card";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
+import { motion } from "motion/react";
 import backgroundImage from "figma:asset/03135be46c4cb7673dcd56b59eb7aed66d11586c.png";
 import logoImage from "figma:asset/7093121508f4e8472b47ab0536d669c9003e4afe.png";
 import chaseImage from "figma:asset/0112d34f09af9f1f8e16a7be363ea4e6d6deec56.png";
+import photo1 from "../assets/MC3_3158.JPG";
+import photo2 from "../assets/MC3_6071.JPG";
+import photo3 from "../assets/MC3_6189-Enhanced-NR.JPG";
+import photo4 from "../assets/MC3_6355-Enhanced-NR.JPG";
+import photo5 from "../assets/MC3_6576-Enhanced-NR.JPG";
+import photo6 from "../assets/MJC_5933-Enhanced-NR.JPG";
+import photo7 from "../assets/MJC_6884.JPG";
+import photo8 from "../assets/MJC_6918-Enhanced-NR.JPG";
+import photo9 from "../assets/MJC_7135-Enhanced-NR.JPG";
+import photo10 from "../assets/MJC_7665-Enhanced-NR.JPG";
 
 export function Gallery() {
   const images = [
     {
-      src: backgroundImage,
-      alt: "Snowy winter scene with trees and musical notes",
-      caption: "The magical winter atmosphere that sets the tone for our Christmas performances"
+      src: photo1,
+      alt: "Chase Padgett performing with guitar and Christmas lights",
+      caption: ""
+    },
+    {
+      src: photo2,
+      alt: "Live performance on stage with stage lights",
+      caption: ""
+    },
+    {
+      src: photo3,
+      alt: "Performing with red electric guitar",
+      caption: ""
+    },
+    {
+      src: photo4,
+      alt: "Christmas stage performance with microphone",
+      caption: ""
+    },
+    {
+      src: photo5,
+      alt: "Festive holiday performance with Christmas decorations",
+      caption: ""
+    },
+    {
+      src: photo6,
+      alt: "Acoustic guitar performance with Christmas trees",
+      caption: ""
+    },
+    {
+      src: photo7,
+      alt: "Christmas concert with stage decorations",
+      caption: ""
+    },
+    {
+      src: photo8,
+      alt: "Holiday music performance with festive lighting",
+      caption: ""
+    },
+    {
+      src: photo9,
+      alt: "Live Christmas show with audience",
+      caption: ""
+    },
+    {
+      src: photo10,
+      alt: "Christmas performance with festive atmosphere",
+      caption: ""
     },
     {
       src: logoImage,
-      alt: "a 6 String Christmas by Chase Padgett logo",
-      caption: "The official logo representing our unique acoustic Christmas experience"
-    },
-    {
-      src: chaseImage,
-      alt: "Chase Padgett jumping out of a Christmas present with guitar",
-      caption: "Chase bringing surprise and delight to audiences with his one-man Christmas show"
+      alt: "6 String Christmas by Chase Padgett logo",
+      caption: ""
     }
   ];
 
@@ -66,23 +117,46 @@ export function Gallery() {
     <section id="gallery" className="py-20 bg-white">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.h2 
               className="text-4xl md:text-5xl mb-6 text-red-800 uppercase font-bold"
               style={{ 
                 fontFamily: '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
                 letterSpacing: '0.15em',
-                textShadow: '2px 2px 4px rgba(220, 38, 38, 0.2)'
+                textShadow: '2px 2px 0px rgba(255, 235, 59, 0.9), 3px 3px 0px rgba(255, 223, 0, 0.6)'
               }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
               Performance Gallery
-            </h2>
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto">
+            </motion.h2>
+            <motion.p 
+              className="text-2xl text-gray-700 max-w-5xl mx-auto" 
+              style={{ fontFamily: '"Zain", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+            >
               Experience the magic of 6 String Christmas through these moments from past performances
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="relative">
+          <motion.div 
+            className="relative"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
             <Card className="overflow-hidden shadow-2xl border-red-200">
               <div className="relative h-[500px] md:h-[600px]">
                 <img
@@ -150,7 +224,7 @@ export function Gallery() {
                 }}
               />
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
