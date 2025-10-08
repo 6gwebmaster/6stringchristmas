@@ -8,6 +8,7 @@ const base = new Airtable({
 export interface Show {
   id: string;
   date: string;
+  day: string;
   time: string;
   showName: string;
   venue: string;
@@ -20,6 +21,7 @@ export interface Show {
 
 export interface GroupedShow {
   date: string;
+  day: string;
   venue: string;
   location: string;
   shows: Show[];
@@ -38,34 +40,56 @@ export async function fetchShows(): Promise<GroupedShow[]> {
     
     console.log('📊 Records found:', records.length);
 
-    const shows: Show[] = records.map(record => ({
-      id: record.id,
-      date: record.get('date') as string,
-      time: record.get('date') as string, // Extract time from date field
-      showName: record.get('ShowName') as string,
-      venue: record.get('Venue') as string,
-      location: record.get('location') as string,
-      ticketLink: record.get('ticketLink') as string,
-      fullBand: record.get('fullBand') as boolean,
-      ticketAvail: record.get('Ticket Avail') as string,
-      onSaleDate: record.get('On Sale Date') as string,
-    }));
+    const shows: Show[] = records.map(record => {
+      const dateTimeString = record.get('Date_for_site') as string;
+      console.log('📅 Raw Date_for_site field:', dateTimeString);
+      
+      return {
+        id: record.id,
+        date: dateTimeString,
+        day: record.get('Day') as string,
+        time: record.get('Time') as string, // Get time from separate Time field
+        showName: record.get('ShowName') as string,
+        venue: record.get('Venue') as string,
+        location: record.get('location') as string,
+        ticketLink: record.get('ticketLink') as string,
+        fullBand: record.get('fullBand') as boolean,
+        ticketAvail: record.get('Ticket Avail') as string,
+        onSaleDate: record.get('On Sale Date') as string,
+      };
+    });
 
     // Group shows by date and venue
     const groupedShows: { [key: string]: GroupedShow } = {};
     
     shows.forEach(show => {
-      const key = `${show.date}-${show.venue}`;
+      // Normalize date to just the date part (YYYY-MM-DD) for grouping
+      const normalizedDate = new Date(show.date).toISOString().split('T')[0];
+      const key = `${normalizedDate}-${show.venue}`;
+      console.log('🔑 Grouping key:', key, 'for show:', {
+        id: show.id,
+        date: show.date,
+        day: show.day,
+        venue: show.venue,
+        location: show.location,
+        time: show.time
+      });
       if (!groupedShows[key]) {
+        console.log('📝 Creating new group for key:', key);
         groupedShows[key] = {
           date: show.date,
+          day: show.day,
           venue: show.venue,
           location: show.location,
           shows: []
         };
+      } else {
+        console.log('➕ Adding to existing group for key:', key);
       }
       groupedShows[key].shows.push(show);
     });
+
+    console.log('📊 Final grouped shows:', Object.values(groupedShows));
 
     return Object.values(groupedShows);
   } catch (error) {

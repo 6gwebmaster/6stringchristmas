@@ -42,18 +42,21 @@ export function Shows() {
     return date.toLocaleDateString('en-US', { weekday: 'short' });
   };
 
-  const formatTime = (dateTimeString: string) => {
-    // Extract time from "12/7/2025 7:00pm" format
-    const timeMatch = dateTimeString.match(/(\d+):(\d+)(am|pm)/i);
-    if (timeMatch) {
-      const [, hour, minute, period] = timeMatch;
-      return `${hour}:${minute} ${period.toUpperCase()}`;
+  const formatTime = (timeString: string) => {
+    console.log('🕐 Formatting time from:', timeString);
+    
+    // If it's already formatted nicely, just return it
+    if (timeString && typeof timeString === 'string') {
+      return timeString.trim();
     }
+    
+    console.log('❌ Could not format time from:', timeString);
     return '';
   };
 
   const getTicketButtonStyle = (status: string) => {
-    switch (status.toLowerCase()) {
+    const normalizedStatus = status.toLowerCase().replace(/[!]/g, '').trim();
+    switch (normalizedStatus) {
       case 'coming soon':
         return 'bg-yellow-500 text-white cursor-not-allowed opacity-75';
       case 'limited avail':
@@ -68,7 +71,8 @@ export function Shows() {
   };
 
   const getTicketButtonText = (status: string) => {
-    switch (status.toLowerCase()) {
+    const normalizedStatus = status.toLowerCase().replace(/[!]/g, '').trim();
+    switch (normalizedStatus) {
       case 'coming soon':
         return 'Coming Soon';
       case 'limited avail':
@@ -120,7 +124,7 @@ export function Shows() {
           </motion.div>
 
           <motion.div 
-            className="space-y-4 mb-16 max-w-6xl mx-auto"
+            className="space-y-4 mb-16 max-w-5xl mx-auto"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -142,67 +146,134 @@ export function Shows() {
               <>
                 {console.log('🎬 Rendering shows:', shows)}
                 {console.log('🎬 Shows length:', shows.length)}
-                {shows.map((groupedShow, index) => (
-                <Card key={index} className="border-2 border-red-100 hover:border-red-300 transition-colors shadow-lg mb-4">
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
-                      {/* Header with date, venue, location */}
-                      <div className="flex items-center space-x-8">
-                        <div className="text-2xl text-gray-800 min-w-[80px]">
-                          {formatDate(groupedShow.date)}
-                        </div>
-                        <div className="text-lg text-gray-800 min-w-[50px]">
-                          {formatDay(groupedShow.date)}
-                        </div>
-                        <div className="text-lg text-red-600 uppercase min-w-[160px]">
-                          {groupedShow.location}
-                        </div>
-                        <div className="text-lg text-gray-800 font-medium">
-                          {groupedShow.venue}
-                        </div>
-                      </div>
-                      
-                      {/* Show times with individual ticket buttons */}
-                      <div className="space-y-2">
-                        {groupedShow.shows.map((show, showIndex) => {
-                          console.log('🎭 Show data:', show);
-                          console.log('🎨 Button style:', getTicketButtonStyle(show.ticketAvail));
-                          console.log('🎫 Button text:', getTicketButtonText(show.ticketAvail));
-                          console.log('🔍 Raw ticketAvail value:', `"${show.ticketAvail}"`);
-                          console.log('🔍 Lowercase ticketAvail:', `"${show.ticketAvail.toLowerCase()}"`);
-                          return (
-                            <div key={showIndex} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
-                              <div className="text-lg text-gray-800 font-medium">
-                                {formatTime(show.time)}
+                {shows.map((groupedShow, index) => {
+                  const hasMultipleShows = groupedShow.shows.length > 1;
+                  console.log('🎭 Processing grouped show:', groupedShow, 'hasMultipleShows:', hasMultipleShows);
+                  
+                  return (
+                    <Card key={index} className="border-2 border-red-100 hover:border-red-300 transition-colors shadow-lg mb-4">
+                      <CardContent className="p-6">
+                        {hasMultipleShows ? (
+                          // Multiple shows - use header + individual times layout
+                          <div className="space-y-4">
+                            {/* Header row with date, day, location, venue */}
+                            <div className="flex items-center gap-8 pb-2 border-b border-gray-200">
+                              <div className="text-xl text-gray-800 font-medium w-16">
+                                {formatDate(groupedShow.date)}
                               </div>
-                              <Button 
-                                className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(show.ticketAvail)}`}
-                                style={{
-                                  backgroundColor: show.ticketAvail.toLowerCase() === 'coming soon' ? '#eab308' :
-                                                  show.ticketAvail.toLowerCase() === 'limited avail' ? '#2563eb' :
-                                                  show.ticketAvail.toLowerCase() === 'going fast' ? '#16a34a' :
-                                                  show.ticketAvail.toLowerCase() === 'sold out' ? '#9333ea' :
-                                                  '#dc2626',
-                                  color: 'white'
-                                }}
-                                onClick={() => {
-                                  if (show.ticketAvail.toLowerCase() !== 'coming soon' && show.ticketAvail.toLowerCase() !== 'sold out') {
-                                    console.log('🎫 Button clicked!', show.ticketLink);
-                                    window.open(show.ticketLink, '_blank');
-                                  }
-                                }}
-                              >
-                                <Ticket className="w-4 h-4" />
-                                {getTicketButtonText(show.ticketAvail)}
-                              </Button>
+                              <div className="text-lg text-gray-600 w-12">
+                                {groupedShow.day}
+                              </div>
+                              <div className="text-lg text-red-600 uppercase font-bold w-32">
+                                {groupedShow.location}
+                              </div>
+                              <div className="text-lg text-gray-800 w-48">
+                                {groupedShow.venue}
+                              </div>
                             </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-                ))}
+                            
+                            {/* Show times with ticket buttons */}
+                            <div className="space-y-2">
+                              {groupedShow.shows.map((show, showIndex) => {
+                                console.log('🎭 Show data:', show);
+                                console.log('🎨 Button style:', getTicketButtonStyle(show.ticketAvail));
+                                console.log('🎫 Button text:', getTicketButtonText(show.ticketAvail));
+                                console.log('🔍 Raw ticketAvail value:', `"${show.ticketAvail}"`);
+                                console.log('🔍 Lowercase ticketAvail:', `"${show.ticketAvail.toLowerCase()}"`);
+                                return (
+                                  <div key={showIndex} className="flex items-center justify-between">
+                                    <div className="flex items-center gap-8">
+                                      <div className="w-16"></div>
+                                      <div className="w-12"></div>
+                                      <div className="w-32"></div>
+                                      <div className="w-48"></div>
+                                      <div className="text-lg text-gray-800 font-medium w-20 text-right">
+                                        {formatTime(show.time)}
+                                      </div>
+                                    </div>
+                                    <Button 
+                                      className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(show.ticketAvail)}`}
+                                      style={{
+                                        backgroundColor: (() => {
+                                          const normalized = show.ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
+                                          switch (normalized) {
+                                            case 'coming soon': return '#eab308';
+                                            case 'limited avail': return '#2563eb';
+                                            case 'going fast': return '#16a34a';
+                                            case 'sold out': return '#9333ea';
+                                            default: return '#dc2626';
+                                          }
+                                        })(),
+                                        color: 'white'
+                                      }}
+                                      onClick={() => {
+                                        const normalized = show.ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
+                                        if (normalized !== 'coming soon' && normalized !== 'sold out') {
+                                          console.log('🎫 Button clicked!', show.ticketLink);
+                                          window.open(show.ticketLink, '_blank');
+                                        }
+                                      }}
+                                    >
+                                      <Ticket className="w-4 h-4" />
+                                      {getTicketButtonText(show.ticketAvail)}
+                                    </Button>
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          </div>
+                        ) : (
+                          // Single show - everything on one line
+                          <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-8">
+                              <div className="text-xl text-gray-800 font-medium w-16">
+                                {formatDate(groupedShow.date)}
+                              </div>
+                              <div className="text-lg text-gray-600 w-12">
+                                {groupedShow.day}
+                              </div>
+                              <div className="text-lg text-red-600 uppercase font-bold w-32">
+                                {groupedShow.location}
+                              </div>
+                              <div className="text-lg text-gray-800 w-48">
+                                {groupedShow.venue}
+                              </div>
+                              <div className="text-lg text-gray-800 font-medium w-20 text-right">
+                                {formatTime(groupedShow.shows[0].time)}
+                              </div>
+                            </div>
+                            <Button 
+                              className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(groupedShow.shows[0].ticketAvail)}`}
+                              style={{
+                                backgroundColor: (() => {
+                                  const normalized = groupedShow.shows[0].ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
+                                  switch (normalized) {
+                                    case 'coming soon': return '#eab308';
+                                    case 'limited avail': return '#2563eb';
+                                    case 'going fast': return '#16a34a';
+                                    case 'sold out': return '#9333ea';
+                                    default: return '#dc2626';
+                                  }
+                                })(),
+                                color: 'white'
+                              }}
+                              onClick={() => {
+                                const normalized = groupedShow.shows[0].ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
+                                if (normalized !== 'coming soon' && normalized !== 'sold out') {
+                                  console.log('🎫 Button clicked!', groupedShow.shows[0].ticketLink);
+                                  window.open(groupedShow.shows[0].ticketLink, '_blank');
+                                }
+                              }}
+                            >
+                              <Ticket className="w-4 h-4" />
+                              {getTicketButtonText(groupedShow.shows[0].ticketAvail)}
+                            </Button>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  );
+                })}
               </>
             )}
           </motion.div>
