@@ -51,7 +51,7 @@ export function InfoCards() {
                   <h4 
                     className={`text-3xl md:text-xl mb-4 ${card.textColor}`}
                     style={{
-                      fontFamily: '"Boogaloo", "Georgia", cursive',
+                      fontFamily: '"Chewy", "Georgia", cursive',
                       fontWeight: '700',
                       fontSize: '1.75rem',
                       fontStyle: 'normal',
