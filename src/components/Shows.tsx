@@ -44,7 +44,22 @@ export function Shows() {
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl mb-6 text-red-800 uppercase font-bold">Shows</h2>
+            <h2 
+              className="text-4xl md:text-5xl mb-6 text-red-800 uppercase font-bold"
+              style={{ 
+                fontFamily: '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
+                letterSpacing: '0.15em',
+                textShadow: '2px 2px 0px rgba(255, 235, 59, 0.9), 3px 3px 0px rgba(255, 223, 0, 0.6)'
+              }}
+            >
+              Shows
+            </h2>
+            <p 
+              className="text-2xl text-gray-700 max-w-5xl mx-auto" 
+              style={{ fontFamily: '"Zain", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}
+            >
+              Book your tickets today!
+            </p>
           </div>
 
           <div className="space-y-4 mb-16 max-w-6xl mx-auto">
