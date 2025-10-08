@@ -36,8 +36,8 @@ export function Header() {
 
   return (
     <>
-      {/* Desktop Header */}
-      <header className={`hidden md:block fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      {/* Desktop Header - Hidden for debugging */}
+      <header className={`hidden fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         isScrolled 
           ? 'bg-white/95 backdrop-blur-sm border-b border-red-100' 
           : 'bg-transparent border-b border-transparent'
@@ -97,8 +97,8 @@ export function Header() {
         </div>
       </header>
 
-      {/* Mobile Header */}
-      <header className="md:hidden fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100" style={{ minHeight: '60px' }}>
+      {/* Mobile Header - Force show for debugging */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100" style={{ minHeight: '60px' }}>
         <div className="w-full h-full flex items-center justify-center relative px-4 py-2">
           {/* Mobile: Centered Tickets Button */}
           <Button 
