@@ -1,3 +1,4 @@
+import React from "react";
 import { Button } from "./ui/button";
 import { Ticket, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -15,8 +16,11 @@ export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isTopMenuOpen, setIsTopMenuOpen] = useState(false);
   const [isBottomMenuOpen, setIsBottomMenuOpen] = useState(false);
+  const [showBottomMenu, setShowBottomMenu] = useState(false);
 
   useEffect(() => {
+    let lastScrollY = window.scrollY;
+    
     const onScroll = () => {
       const hero = document.getElementById("home");
       if (!hero) {
@@ -25,7 +29,19 @@ export function Header() {
       }
       const halfway = hero.offsetHeight * 0.5;
       setIsScrolled(window.scrollY > halfway);
+      
+      // Show bottom menu when scrolling down, hide when scrolling up
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // Scrolling down and past 100px
+        setShowBottomMenu(true);
+      } else if (currentScrollY < lastScrollY) {
+        // Scrolling up
+        setShowBottomMenu(false);
+      }
+      lastScrollY = currentScrollY;
     };
+    
     window.addEventListener("scroll", onScroll);
     onScroll(); // initialize once
     return () => window.removeEventListener("scroll", onScroll);
@@ -155,34 +171,28 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Sticky Bottom Bar with Tickets Button */}
-      <style>{`
-        .mobile-bottom-bar {
-          position: fixed !important;
-          bottom: 0 !important;
-          left: 0 !important;
-          right: 0 !important;
-          z-index: 100 !important;
-          display: block !important;
-          background-color: white !important;
-          border-top: 1px solid #e5e7eb !important;
-          padding: 12px 16px !important;
-        }
-        @media (min-width: 768px) {
-          .mobile-bottom-bar { display: none !important; }
-        }
-      `}</style>
-      <div className="mobile-bottom-bar">
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <Button
-            onClick={() => scrollToSection("shows")}
-            className="bg-red-700 hover:bg-red-800 text-white flex items-center gap-2 px-6 py-3 text-base transition-all duration-500"
+      {/* Mobile Sticky Bottom Bar with Tickets Button - HIDDEN */}
+      {/* <AnimatePresence>
+        {showBottomMenu && (
+          <motion.div
+            initial={{ opacity: 0, y: 100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 100 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-[100] p-3"
           >
-            <Ticket className="w-5 h-5" />
-            Tickets
-          </Button>
-        </div>
-      </div>
+            <div className="flex justify-center">
+              <Button
+                onClick={() => scrollToSection("shows")}
+                className="bg-red-700 hover:bg-red-800 text-white flex items-center gap-2 px-6 py-3 text-base transition-all duration-200"
+              >
+                <Ticket className="w-5 h-5" />
+                Tickets
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence> */}
     </>
   );
 }
