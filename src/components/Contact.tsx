@@ -3,6 +3,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Label } from "./ui/label";
+import { motion } from "motion/react";
 
 export function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
@@ -15,26 +16,46 @@ export function Contact() {
     <section id="contact" className="py-20 bg-gradient-to-br from-red-50 to-green-50">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <motion.h2 
               className="text-4xl md:text-5xl mb-6 text-red-800 uppercase font-bold"
               style={{ 
                 fontFamily: '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
                 letterSpacing: '0.15em',
                 textShadow: '2px 2px 0px rgba(255, 235, 59, 0.9), 3px 3px 0px rgba(255, 223, 0, 0.6)'
               }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.2 }}
             >
               Contact
-            </h2>
-            <p 
+            </motion.h2>
+            <motion.p 
               className="text-2xl text-gray-700 max-w-5xl mx-auto"
               style={{ fontFamily: '"Zain", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.4 }}
             >
               Have questions about the show or interested in booking a private performance?
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className="max-w-2xl mx-auto">
+          <motion.div 
+            className="max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+          >
             <Card className="shadow-xl border-red-200">
               <CardHeader>
                 <CardTitle className="text-2xl text-red-800">Send a Message</CardTitle>
@@ -101,7 +122,7 @@ export function Contact() {
                 </form>
               </CardContent>
             </Card>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
