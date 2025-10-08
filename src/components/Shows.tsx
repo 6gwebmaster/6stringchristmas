@@ -55,11 +55,13 @@ export function Shows() {
   const getTicketButtonStyle = (status: string) => {
     switch (status.toLowerCase()) {
       case 'coming soon':
-        return 'bg-red-600 text-white cursor-not-allowed opacity-75';
-      case 'limited':
-        return 'bg-red-600 hover:bg-red-700 text-white';
-      case 'selling fast':
-        return 'bg-red-600 hover:bg-red-700 text-white';
+        return 'bg-yellow-500 text-white cursor-not-allowed opacity-75';
+      case 'limited avail':
+        return 'bg-blue-600 hover:bg-blue-700 text-white';
+      case 'going fast':
+        return 'bg-green-600 hover:bg-green-700 text-white';
+      case 'sold out':
+        return 'bg-purple-600 text-white cursor-not-allowed opacity-75';
       default:
         return 'bg-red-600 hover:bg-red-700 text-white';
     }
@@ -69,12 +71,14 @@ export function Shows() {
     switch (status.toLowerCase()) {
       case 'coming soon':
         return 'Coming Soon';
-      case 'limited':
-        return 'Limited Tickets';
-      case 'selling fast':
-        return 'Selling Fast';
+      case 'limited avail':
+        return 'Get Tickets - Limited Availability';
+      case 'going fast':
+        return 'Buy Now - Going Fast!';
+      case 'sold out':
+        return 'Sold Out!';
       default:
-        return 'Get Your Tickets';
+        return 'Get Tickets';
     }
   };
 
@@ -164,6 +168,8 @@ export function Shows() {
                           console.log('🎭 Show data:', show);
                           console.log('🎨 Button style:', getTicketButtonStyle(show.ticketAvail));
                           console.log('🎫 Button text:', getTicketButtonText(show.ticketAvail));
+                          console.log('🔍 Raw ticketAvail value:', `"${show.ticketAvail}"`);
+                          console.log('🔍 Lowercase ticketAvail:', `"${show.ticketAvail.toLowerCase()}"`);
                           return (
                             <div key={showIndex} className="flex items-center justify-between bg-gray-50 p-3 rounded-lg">
                               <div className="text-lg text-gray-800 font-medium">
@@ -171,8 +177,16 @@ export function Shows() {
                               </div>
                               <Button 
                                 className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(show.ticketAvail)}`}
+                                style={{
+                                  backgroundColor: show.ticketAvail.toLowerCase() === 'coming soon' ? '#eab308' :
+                                                  show.ticketAvail.toLowerCase() === 'limited avail' ? '#2563eb' :
+                                                  show.ticketAvail.toLowerCase() === 'going fast' ? '#16a34a' :
+                                                  show.ticketAvail.toLowerCase() === 'sold out' ? '#9333ea' :
+                                                  '#dc2626',
+                                  color: 'white'
+                                }}
                                 onClick={() => {
-                                  if (show.ticketAvail.toLowerCase() !== 'coming soon') {
+                                  if (show.ticketAvail.toLowerCase() !== 'coming soon' && show.ticketAvail.toLowerCase() !== 'sold out') {
                                     console.log('🎫 Button clicked!', show.ticketLink);
                                     window.open(show.ticketLink, '_blank');
                                   }
