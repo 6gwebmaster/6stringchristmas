@@ -20,7 +20,10 @@ export function Header() {
     };
 
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      const width = window.innerWidth;
+      const isMobileDevice = width < 768 || /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      console.log('Screen width:', width, 'Is Mobile:', isMobileDevice);
+      setIsMobile(isMobileDevice);
     };
 
     window.addEventListener('scroll', handleScroll);
