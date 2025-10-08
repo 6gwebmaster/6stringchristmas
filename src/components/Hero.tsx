@@ -23,13 +23,13 @@ export function Hero() {
   };
 
   return (
-    <section id="home" className="relative h-[88vh] flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen h-[100vh] sm:h-[95vh] md:h-[90vh] lg:h-[88vh] flex items-center justify-center overflow-hidden pt-32 sm:pt-24 md:pt-16 lg:pt-0">
       {/* Background Image - Snowy Scene */}
       <div className="absolute inset-0 z-0">
         <img
           src={backgroundImage}
           alt="Snowy winter scene with trees and musical notes"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover object-center sm:object-top md:object-center lg:object-cover"
         />
       </div>
 
