@@ -1,182 +1,163 @@
 import { Button } from "./ui/button";
-import { Ticket, X } from "lucide-react";
-import { useState, useEffect } from "react";
+import { Ticket, Menu, X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
 
+const NAV = [
+  { id: "about",   label: "About" },
+  { id: "gallery", label: "Gallery" },
+  { id: "reviews", label: "Reviews" },
+  { id: "shows",   label: "Shows" },
+  { id: "contact", label: "Contact" },
+];
+
 export function Header() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(0);
+  const [isTopMenuOpen, setIsTopMenuOpen] = useState(false);
+  const [isBottomMenuOpen, setIsBottomMenuOpen] = useState(false);
 
   useEffect(() => {
-    // Set initial width
-    setWindowWidth(window.innerWidth);
-
-    const handleScroll = () => {
-      const heroSection = document.getElementById('home');
-      if (heroSection) {
-        const heroHeight = heroSection.offsetHeight;
-        const scrollPosition = window.scrollY;
-        const halfwayPoint = heroHeight * 0.5;
-        setIsScrolled(scrollPosition > halfwayPoint);
+    const onScroll = () => {
+      const hero = document.getElementById("home");
+      if (!hero) {
+        setIsScrolled(window.scrollY > 20);
+        return;
       }
+      const halfway = hero.offsetHeight * 0.5;
+      setIsScrolled(window.scrollY > halfway);
     };
-
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-    };
+    window.addEventListener("scroll", onScroll);
+    onScroll(); // initialize once
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-    setIsMobileMenuOpen(false);
+  const scrollToSection = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setIsTopMenuOpen(false);
+    setIsBottomMenuOpen(false);
   };
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const isMobile = windowWidth > 0 && windowWidth < 768;
-
-  // Mobile View
-  if (isMobile) {
-    return (
-      <>
-        <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-100">
-          <div className="container mx-auto px-4 h-16 flex items-center justify-center relative">
-            {/* Centered Tickets Button */}
-            <Button 
-              onClick={() => scrollToSection('shows')}
-              className="bg-red-700 hover:bg-red-800 text-white flex items-center gap-2 px-6 py-3"
-            >
-              <Ticket className="w-5 h-5" />
-              Tickets
-            </Button>
-
-            {/* Hamburger Menu on Right */}
-            <button 
-              className="absolute right-4 w-12 h-12 flex items-center justify-center text-red-700"
-              onClick={toggleMobileMenu}
-            >
-              {isMobileMenuOpen ? (
-                <X className="w-8 h-8" strokeWidth={2.5} />
-              ) : (
-                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              )}
-            </button>
-          </div>
-        </header>
-
-        {/* Mobile Menu Dropdown */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div 
-              className="fixed top-16 left-0 right-0 z-40 bg-white/98 backdrop-blur-sm border-b border-red-100"
-              initial={{ height: 0, opacity: 0 }}
-              animate={{ height: "auto", opacity: 1 }}
-              exit={{ height: 0, opacity: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <nav className="container mx-auto px-4 py-6 flex flex-col space-y-4">
-                <button 
-                  onClick={() => scrollToSection('home')}
-                  className="text-gray-700 hover:text-red-700 text-left py-2 text-lg"
-                >
-                  Home
-                </button>
-                <button 
-                  onClick={() => scrollToSection('about')}
-                  className="text-gray-700 hover:text-red-700 text-left py-2 text-lg"
-                >
-                  About
-                </button>
-                <button 
-                  onClick={() => scrollToSection('contact')}
-                  className="text-gray-700 hover:text-red-700 text-left py-2 text-lg"
-                >
-                  Contact
-                </button>
-              </nav>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </>
-    );
-  }
-
-  // Desktop View
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled 
-        ? 'bg-white/95 backdrop-blur-sm border-b border-red-100' 
-        : 'bg-transparent border-b border-transparent'
-    }`}>
-      <div className="container mx-auto px-4 py-2 flex items-center justify-between">
-        {/* Left spacer */}
-        <div className="flex-1"></div>
-
-        {/* Centered Tickets Button */}
-        <div className="flex justify-center">
-          <Button 
-            onClick={() => scrollToSection('shows')}
-            className={`flex items-center gap-3 px-10 py-5 text-xl transition-all duration-500 ${
-              isScrolled 
-                ? 'bg-red-700 hover:bg-red-800 text-white' 
-                : 'bg-white hover:bg-red-50 text-red-700 border-2 border-white hover:border-red-700'
+    <>
+      <header
+          className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+              isScrolled
+                  ? "bg-white/95 backdrop-blur-sm border-b border-red-100"
+                  : "bg-transparent border-b border-transparent"
+          }`}
+          style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50 }}
+      >
+        {/* Mobile Layout - max-width: 767px */}
+        <div className="md:hidden w-full px-4 py-2 flex items-center justify-between">
+          {/* Hamburger Button - Left */}
+          <button
+            onClick={() => setIsTopMenuOpen(!isTopMenuOpen)}
+            className={`p-2 transition-colors ${
+              isScrolled
+                ? "text-gray-700 hover:text-red-700"
+                : "text-white hover:text-red-300"
             }`}
+          >
+            {isTopMenuOpen ? (
+              <X className="w-6 h-6" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
+
+          {/* Tickets Button - Center */}
+          <Button
+              onClick={() => scrollToSection("shows")}
+              className={`flex items-center gap-2 px-6 py-3 text-base transition-all duration-500 ${
+                  isScrolled
+                      ? "bg-red-700 hover:bg-red-800 text-white"
+                      : "bg-white hover:bg-red-50 text-red-700 border-2 border-white hover:border-red-700"
+              }`}
+          >
+            <Ticket className="w-5 h-5" />
+            Tickets
+          </Button>
+
+          {/* Spacer - Right */}
+          <div className="w-10"></div>
+        </div>
+
+        {/* Desktop Layout - min-width: 768px */}
+        <div className="hidden md:flex container mx-auto px-4 py-2 items-center justify-between">
+          {/* Left spacer */}
+          <div className="flex-1" />
+
+          {/* Center: Tickets button */}
+          <Button
+              onClick={() => scrollToSection("shows")}
+              className={`flex items-center gap-3 px-10 py-5 text-xl transition-all duration-500 ${
+                  isScrolled
+                      ? "bg-red-700 hover:bg-red-800 text-white"
+                      : "bg-white hover:bg-red-50 text-red-700 border-2 border-white hover:border-red-700"
+              }`}
           >
             <Ticket className="w-7 h-7" />
             Tickets
           </Button>
-        </div>
 
-        {/* Right navigation links */}
-        <div className="flex flex-1 items-center justify-end space-x-6">
-          <button 
-            onClick={() => scrollToSection('home')}
-            className={`transition-all duration-500 text-xl ${
-              isScrolled 
-                ? 'text-gray-700 hover:text-red-700' 
-                : 'text-white hover:text-red-300'
-            }`}
+          {/* Right: navigation links */}
+          <nav className="flex flex-1 items-center justify-end space-x-6">
+            {NAV.map((item) => (
+                <button
+                    key={item.id}
+                    onClick={() => scrollToSection(item.id)}
+                    className={`whitespace-nowrap transition-all duration-500 text-xl ${
+                        isScrolled
+                            ? "text-gray-700 hover:text-red-700"
+                            : "text-white hover:text-red-300"
+                    }`}
+                >
+                  {item.label}
+                </button>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* Top Menu Popup - Slides down from top */}
+      <AnimatePresence>
+        {isTopMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -100 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -100 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden fixed top-16 left-0 right-0 bg-white border-b border-gray-200 shadow-2xl"
+            style={{ zIndex: 100 }}
           >
-            Home
-          </button>
-          <button 
-            onClick={() => scrollToSection('about')}
-            className={`transition-all duration-500 text-xl ${
-              isScrolled 
-                ? 'text-gray-700 hover:text-red-700' 
-                : 'text-white hover:text-red-300'
-            }`}
+            <nav className="flex flex-col">
+              {NAV.map((item) => (
+                <button
+                  key={item.id}
+                  onClick={() => scrollToSection(item.id)}
+                  className="px-6 py-4 text-left text-gray-700 hover:bg-red-50 hover:text-red-700 transition-colors border-b border-gray-100 last:border-b-0"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Mobile Bottom Bar - Just Tickets Button */}
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200">
+        <div className="flex items-center justify-center py-3">
+          <Button
+            onClick={() => scrollToSection("shows")}
+            className="bg-red-700 hover:bg-red-800 text-white flex items-center gap-2 px-8 py-3"
           >
-            About
-          </button>
-          <button 
-            onClick={() => scrollToSection('contact')}
-            className={`transition-all duration-500 text-xl ${
-              isScrolled 
-                ? 'text-gray-700 hover:text-red-700' 
-                : 'text-white hover:text-red-300'
-            }`}
-          >
-            Contact
-          </button>
+            <Ticket className="w-5 h-5" />
+            Get Tickets
+          </Button>
         </div>
       </div>
-    </header>
+    </>
   );
 }
