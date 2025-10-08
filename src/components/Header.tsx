@@ -132,6 +132,15 @@ export function Header() {
             style={{ zIndex: 100 }}
           >
             <nav className="flex flex-col">
+              {/* Close Button */}
+              <button
+                onClick={() => setIsTopMenuOpen(false)}
+                className="px-6 py-4 text-left text-red-700 hover:bg-red-50 transition-colors border-b border-gray-100 flex items-center gap-2"
+              >
+                <X className="w-5 h-5" />
+                Close Menu
+              </button>
+              
               {NAV.map((item) => (
                 <button
                   key={item.id}
@@ -146,15 +155,31 @@ export function Header() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Bottom Bar - Just Tickets Button */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-gray-200">
-        <div className="flex items-center justify-center py-3">
+      {/* Mobile Sticky Bottom Bar with Tickets Button */}
+      <style>{`
+        .mobile-bottom-bar {
+          position: fixed !important;
+          bottom: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          z-index: 100 !important;
+          display: block !important;
+          background-color: white !important;
+          border-top: 1px solid #e5e7eb !important;
+          padding: 12px 16px !important;
+        }
+        @media (min-width: 768px) {
+          .mobile-bottom-bar { display: none !important; }
+        }
+      `}</style>
+      <div className="mobile-bottom-bar">
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           <Button
             onClick={() => scrollToSection("shows")}
-            className="bg-red-700 hover:bg-red-800 text-white flex items-center gap-2 px-8 py-3"
+            className="bg-red-700 hover:bg-red-800 text-white flex items-center gap-2 px-6 py-3 text-base transition-all duration-500"
           >
             <Ticket className="w-5 h-5" />
-            Get Tickets
+            Tickets
           </Button>
         </div>
       </div>
