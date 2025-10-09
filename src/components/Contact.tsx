@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -7,10 +7,35 @@ import { Label } from "./ui/label";
 import { motion } from "motion/react";
 
 export function Contact() {
-  const handleSubmit = (e: React.FormEvent) => {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission
-    alert("Thank you for your message! We'll get back to you soon.");
+    setStatus("submitting");
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      const response = await fetch("https://formspree.io/f/mgvnnvwe", {
+        method: "POST",
+        body: data,
+        headers: {
+          Accept: "application/json",
+        },
+      });
+
+      if (response.ok) {
+        setStatus("success");
+        form.reset();
+      } else {
+        setStatus("error");
+        setTimeout(() => setStatus("idle"), 5000);
+      }
+    } catch (error) {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 5000);
+    }
   };
 
   return (
@@ -58,70 +83,106 @@ export function Contact() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <Card className="shadow-xl border-red-200">
-              <CardHeader>
-                <CardTitle className="text-2xl text-red-800">Send a Message</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input 
-                        id="firstName" 
-                        placeholder="Your first name" 
-                        className="border-red-200 focus:border-red-500"
-                      />
+              {status === "success" ? (
+                <>
+                  <CardHeader>
+                    <CardTitle className="text-2xl text-green-700 text-center">Message Sent! 🎄</CardTitle>
+                  </CardHeader>
+                  <CardContent className="text-center py-12">
+                    <div className="space-y-6">
+                      <p className="text-xl text-gray-700">
+                        Thank you for reaching out!
+                      </p>
+                      <Button 
+                        onClick={() => setStatus("idle")}
+                        className="bg-red-700 hover:bg-red-800 text-white mt-4"
+                        size="lg"
+                      >
+                        Send Another Message
+                      </Button>
                     </div>
-                    <div>
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input 
-                        id="lastName" 
-                        placeholder="Your last name" 
-                        className="border-red-200 focus:border-red-500"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="email">Email</Label>
-                    <Input 
-                      id="email" 
-                      type="email" 
-                      placeholder="your.email@example.com" 
-                      className="border-red-200 focus:border-red-500"
-                      required
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="subject">Subject</Label>
-                    <Input 
-                      id="subject" 
-                      placeholder="What's this about?" 
-                      className="border-red-200 focus:border-red-500"
-                    />
-                  </div>
-                  
-                  <div>
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea 
-                      id="message" 
-                      placeholder="Tell us more..." 
-                      rows={5}
-                      className="border-red-200 focus:border-red-500"
-                      required
-                    />
-                  </div>
-                  
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-red-700 hover:bg-red-800 text-white"
-                    size="lg"
-                  >
-                    Send Message
-                  </Button>
-                </form>
-              </CardContent>
+                  </CardContent>
+                </>
+              ) : (
+                <>
+                  <CardHeader>
+                    <CardTitle className="text-2xl text-red-800">Send a Message</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                      <div className="grid md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="firstName">First Name</Label>
+                          <Input 
+                            id="firstName"
+                            name="firstName"
+                            placeholder="Your first name" 
+                            className="border-red-200 focus:border-red-500"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="lastName">Last Name</Label>
+                          <Input 
+                            id="lastName"
+                            name="lastName"
+                            placeholder="Your last name" 
+                            className="border-red-200 focus:border-red-500"
+                          />
+                        </div>
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="email">Email</Label>
+                        <Input 
+                          id="email"
+                          name="email"
+                          type="email" 
+                          placeholder="your.email@example.com" 
+                          className="border-red-200 focus:border-red-500"
+                          required
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="subject">Subject</Label>
+                        <Input 
+                          id="subject"
+                          name="subject"
+                          placeholder="What's this about?" 
+                          className="border-red-200 focus:border-red-500"
+                        />
+                      </div>
+                      
+                      <div>
+                        <Label htmlFor="message">Message</Label>
+                        <Textarea 
+                          id="message"
+                          name="message"
+                          placeholder="Tell us more..." 
+                          rows={5}
+                          className="border-red-200 focus:border-red-500"
+                          required
+                        />
+                      </div>
+                      
+                      {status === "error" && (
+                        <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-md">
+                          Oops! There was an error sending your message. Please try again.
+                        </div>
+                      )}
+                      
+                      <Button 
+                        type="submit" 
+                        className="w-full bg-red-700 hover:bg-red-800 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+                        size="lg"
+                        disabled={status === "submitting"}
+                      >
+                        {status === "submitting" ? "Sending..." : "Send Message"}
+                      </Button>
+                    </form>
+                  </CardContent>
+                </>
+              )}
             </Card>
           </motion.div>
         </div>
