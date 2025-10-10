@@ -115,15 +115,15 @@ export function About() {
               transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
               whileHover={{ scale: 1.02, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)" }}
             >
-              <div className="absolute inset-0 bg-gradient-to-tr from-red-500/10 to-green-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 pointer-events-none" />
               <div style={{padding: '56.25% 0 0 0', position: 'relative'}}>
                 <iframe 
-                  src="https://player.vimeo.com/video/905410003?badge=0&autopause=0&player_id=0&app_id=58479" 
+                  src="https://player.vimeo.com/video/905410003?badge=0&autopause=0&player_id=0&app_id=58479&title=0&byline=0&portrait=0&controls=1&autoplay=0" 
                   frameBorder="0" 
                   allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" 
                   referrerPolicy="strict-origin-when-cross-origin" 
                   style={{position: 'absolute', top: 0, left: 0, width: '100%', height: '100%'}} 
                   title="Chase Padgett: 6 String Christmas - Sizzle Reel"
+                  allowFullScreen
                 />
               </div>
             </motion.div>
@@ -166,12 +166,19 @@ export function About() {
                     viewport={{ once: true }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                   >
-                    <img 
-                      src={orlandoWeeklyLogo}
-                      alt="Orlando Weekly"
-                      className="h-16 md:h-20 lg:h-24 w-auto"
-                      style={{ transform: 'none' }}
-                    />
+                    <a 
+                      href="https://vimeo.com/905410003" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="cursor-pointer hover:opacity-80 transition-opacity duration-300"
+                    >
+                      <img 
+                        src={orlandoWeeklyLogo}
+                        alt="Orlando Weekly - Click to watch video"
+                        className="h-16 md:h-20 lg:h-24 w-auto"
+                        style={{ transform: 'none' }}
+                      />
+                    </a>
                   </motion.div>
                 </CardContent>
               </Card>
