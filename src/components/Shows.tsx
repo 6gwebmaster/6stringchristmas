@@ -54,24 +54,45 @@ export function Shows() {
     return '';
   };
 
-  const getTicketButtonStyle = (status: string) => {
-    const normalizedStatus = status.toLowerCase().replace(/[!]/g, '').trim();
+  const normalizeStatus = (status?: string) => {
+    if (!status || typeof status !== 'string') return 'unknown';
+    return status.toLowerCase().replace(/[!]/g, '').trim();
+  };
+
+  const getButtonInlineColors = (status?: string) => {
+    const normalizedStatus = normalizeStatus(status);
     switch (normalizedStatus) {
       case 'coming soon':
-        return 'bg-yellow-500 text-white cursor-not-allowed opacity-75';
+        return { backgroundColor: '#FFFFFF', color: '#dc2626' };
       case 'limited avail':
-        return 'bg-blue-600 hover:bg-blue-700 text-white';
+        return { backgroundColor: '#b91c1c', color: 'white' };
       case 'going fast':
-        return 'bg-green-600 hover:bg-green-700 text-white';
+        return { backgroundColor: '#e0b018', color: 'white' };
       case 'sold out':
-        return 'bg-purple-600 text-white cursor-not-allowed opacity-75';
+        return { backgroundColor: '#000000', color: '#e62d20' };
       default:
-        return 'bg-red-600 hover:bg-red-700 text-white';
+        return { backgroundColor: '#16a34a', color: 'white' };
     }
   };
 
-  const getTicketButtonText = (status: string) => {
-    const normalizedStatus = status.toLowerCase().replace(/[!]/g, '').trim();
+  const getTicketButtonStyle = (status?: string) => {
+    const normalizedStatus = normalizeStatus(status);
+    switch (normalizedStatus) {
+      case 'coming soon':
+        return 'bg-white text-[#dc2626] cursor-not-allowed opacity-75';
+      case 'limited avail':
+        return 'bg-red-700 hover:bg-red-800 text-white';
+      case 'going fast':
+        return 'bg-[#e0b018] hover:bg-[#c99c14] text-white';
+      case 'sold out':
+        return 'bg-[#000000] text-[#e62d20] cursor-not-allowed opacity-75';
+      default:
+        return 'bg-green-600 hover:bg-green-700 text-white';
+    }
+  };
+
+  const getTicketButtonText = (status?: string) => {
+    const normalizedStatus = normalizeStatus(status);
     switch (normalizedStatus) {
       case 'coming soon':
         return 'Coming Soon';
@@ -180,7 +201,7 @@ export function Shows() {
                                   console.log('🎨 Button style:', getTicketButtonStyle(show.ticketAvail));
                                   console.log('🎫 Button text:', getTicketButtonText(show.ticketAvail));
                                   console.log('🔍 Raw ticketAvail value:', `"${show.ticketAvail}"`);
-                                  console.log('🔍 Lowercase ticketAvail:', `"${show.ticketAvail.toLowerCase()}"`);
+                                  console.log('🔍 Normalized ticketAvail:', `"${normalizeStatus(show.ticketAvail)}"`);
                                   return (
                                     <div key={showIndex} className="flex items-center justify-between">
                                       <div className="flex items-center gap-8">
@@ -194,21 +215,9 @@ export function Shows() {
                                       </div>
                                       <Button 
                                         className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(show.ticketAvail)}`}
-                                        style={{
-                                          backgroundColor: (() => {
-                                            const normalized = show.ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
-                                            switch (normalized) {
-                                              case 'coming soon': return '#eab308';
-                                              case 'limited avail': return '#2563eb';
-                                              case 'going fast': return '#16a34a';
-                                              case 'sold out': return '#9333ea';
-                                              default: return '#dc2626';
-                                            }
-                                          })(),
-                                          color: 'white'
-                                        }}
+                                        style={getButtonInlineColors(show.ticketAvail)}
                                         onClick={() => {
-                                          const normalized = show.ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
+                                          const normalized = normalizeStatus(show.ticketAvail);
                                           if (normalized !== 'coming soon' && normalized !== 'sold out') {
                                             console.log('🎫 Button clicked!', show.ticketLink);
                                             window.open(show.ticketLink, '_blank');
@@ -251,21 +260,9 @@ export function Shows() {
                                     <div className="col-span-2">
                                       <Button 
                                         className={`w-full px-4 flex items-center justify-center gap-2 text-sm ${getTicketButtonStyle(show.ticketAvail)}`}
-                                        style={{
-                                          backgroundColor: (() => {
-                                            const normalized = show.ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
-                                            switch (normalized) {
-                                              case 'coming soon': return '#eab308';
-                                              case 'limited avail': return '#2563eb';
-                                              case 'going fast': return '#16a34a';
-                                              case 'sold out': return '#9333ea';
-                                              default: return '#dc2626';
-                                            }
-                                          })(),
-                                          color: 'white'
-                                        }}
+                                        style={getButtonInlineColors(show.ticketAvail)}
                                         onClick={() => {
-                                          const normalized = show.ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
+                                          const normalized = normalizeStatus(show.ticketAvail);
                                           if (normalized !== 'coming soon' && normalized !== 'sold out') {
                                             console.log('🎫 Button clicked!', show.ticketLink);
                                             window.open(show.ticketLink, '_blank');
@@ -304,21 +301,9 @@ export function Shows() {
                               </div>
                               <Button 
                                 className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(groupedShow.shows[0].ticketAvail)}`}
-                                style={{
-                                  backgroundColor: (() => {
-                                    const normalized = groupedShow.shows[0].ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
-                                    switch (normalized) {
-                                      case 'coming soon': return '#eab308';
-                                      case 'limited avail': return '#2563eb';
-                                      case 'going fast': return '#16a34a';
-                                      case 'sold out': return '#9333ea';
-                                      default: return '#dc2626';
-                                    }
-                                  })(),
-                                  color: 'white'
-                                }}
+                                style={getButtonInlineColors(groupedShow.shows[0].ticketAvail)}
                                 onClick={() => {
-                                  const normalized = groupedShow.shows[0].ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
+                                  const normalized = normalizeStatus(groupedShow.shows[0].ticketAvail);
                                   if (normalized !== 'coming soon' && normalized !== 'sold out') {
                                     console.log('🎫 Button clicked!', groupedShow.shows[0].ticketLink);
                                     window.open(groupedShow.shows[0].ticketLink, '_blank');
@@ -350,21 +335,9 @@ export function Shows() {
                               <div className="col-span-2">
                                 <Button 
                                   className={`w-full px-4 flex items-center justify-center gap-2 text-sm ${getTicketButtonStyle(groupedShow.shows[0].ticketAvail)}`}
-                                  style={{
-                                    backgroundColor: (() => {
-                                      const normalized = groupedShow.shows[0].ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
-                                      switch (normalized) {
-                                        case 'coming soon': return '#eab308';
-                                        case 'limited avail': return '#2563eb';
-                                        case 'going fast': return '#16a34a';
-                                        case 'sold out': return '#9333ea';
-                                        default: return '#dc2626';
-                                      }
-                                    })(),
-                                    color: 'white'
-                                  }}
+                                  style={getButtonInlineColors(groupedShow.shows[0].ticketAvail)}
                                   onClick={() => {
-                                    const normalized = groupedShow.shows[0].ticketAvail.toLowerCase().replace(/[!]/g, '').trim();
+                                    const normalized = normalizeStatus(groupedShow.shows[0].ticketAvail);
                                     if (normalized !== 'coming soon' && normalized !== 'sold out') {
                                       console.log('🎫 Button clicked!', groupedShow.shows[0].ticketLink);
                                       window.open(groupedShow.shows[0].ticketLink, '_blank');
