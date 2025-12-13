@@ -40,7 +40,7 @@ export async function fetchShows(): Promise<GroupedShow[]> {
     
     console.log('📊 Records found:', records.length);
 
-    const shows: Show[] = records.map(record => {
+    const allShows: Show[] = records.map(record => {
       const dateTimeString = record.get('Date_for_site') as string;
       console.log('📅 Raw Date_for_site field:', dateTimeString);
       
@@ -58,6 +58,18 @@ export async function fetchShows(): Promise<GroupedShow[]> {
         onSaleDate: record.get('On Sale Date') as string,
       };
     });
+
+    // Filter out past shows - only show today's shows and future shows
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set to start of today
+    
+    const shows = allShows.filter(show => {
+      const showDate = new Date(show.date);
+      showDate.setHours(0, 0, 0, 0); // Compare dates only, not times
+      return showDate >= today;
+    });
+    
+    console.log(`📊 Filtered shows: ${shows.length} upcoming out of ${allShows.length} total`);
 
     // Group shows by date and venue
     const groupedShows: { [key: string]: GroupedShow } = {};
