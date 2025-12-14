@@ -17,6 +17,8 @@ export interface Show {
   fullBand: boolean;
   ticketAvail: string;
   onSaleDate: string;
+  discountCode?: string;
+  discountPercentage?: string;
 }
 
 export interface GroupedShow {
@@ -56,6 +58,9 @@ export async function fetchShows(): Promise<GroupedShow[]> {
         fullBand: record.get('fullBand') as boolean,
         ticketAvail: record.get('Ticket Avail') as string,
         onSaleDate: record.get('On Sale Date') as string,
+        discountCode: record.get('Discount Code') as string,
+        discountPercentage: record.get('Discount Percentage') as string,  
+
       };
     });
 

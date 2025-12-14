@@ -213,6 +213,12 @@ export function Shows() {
                                           {formatTime(show.time)}
                                         </div>
                                       </div>
+                                      {show.discountCode && (
+                                       <div className="font-medium text-sm mr-4">
+                                       <span className="ml-1 text-red-600 font-bold">Use code {show.discountCode} to get {show.discountPercentage}% off!</span>
+                                     </div>
+                                      )}
+
                                       <Button 
                                         className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(show.ticketAvail)}`}
                                         style={getButtonInlineColors(show.ticketAvail)}
@@ -258,6 +264,12 @@ export function Shows() {
                                       {formatTime(show.time)}
                                     </div>
                                     <div className="col-span-2">
+                                    {show.discountCode && (
+                                        <div className="font-medium text-sm mr-4">
+                                       <span className="ml-1 text-red-600 font-bold">Use code {show.discountCode} to get {show.discountPercentage}% off!</span>
+                                      </div>
+                                      )}
+
                                       <Button 
                                         className={`w-full px-4 flex items-center justify-center gap-2 text-sm ${getTicketButtonStyle(show.ticketAvail)}`}
                                         style={getButtonInlineColors(show.ticketAvail)}
@@ -299,6 +311,14 @@ export function Shows() {
                                   {formatTime(groupedShow.shows[0].time)}
                                 </div>
                               </div>
+                              {groupedShow.shows[0].discountCode && (
+                                        <div className="text-green-600 font-medium text-sm mr-4">
+            
+                                        <span className="ml-1 font-bold">Use code {groupedShow.shows[0].discountCode} to get
+                                        {groupedShow.shows[0].discountPercentage}% off!</span>
+                                      </div>
+                                      )}
+
                               <Button 
                                 className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(groupedShow.shows[0].ticketAvail)}`}
                                 style={getButtonInlineColors(groupedShow.shows[0].ticketAvail)}
@@ -333,6 +353,14 @@ export function Shows() {
                                 {formatTime(groupedShow.shows[0].time)}
                               </div>
                               <div className="col-span-2">
+                                {groupedShow.shows[0].discountCode && (
+                                        <div className="text-green-600 font-medium text-sm mr-4">
+            
+                                          <span className="ml-1 font-bold">Use code {groupedShow.shows[0].discountCode} to get
+                                          {groupedShow.shows[0].discountPercentage}% off!</span>
+                                        </div>
+                                      )}
+
                                 <Button 
                                   className={`w-full px-4 flex items-center justify-center gap-2 text-sm ${getTicketButtonStyle(groupedShow.shows[0].ticketAvail)}`}
                                   style={getButtonInlineColors(groupedShow.shows[0].ticketAvail)}
