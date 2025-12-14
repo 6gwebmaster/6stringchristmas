@@ -213,6 +213,13 @@ export function Shows() {
                                           {formatTime(show.time)}
                                         </div>
                                       </div>
+                                      {show.discountCode && (
+                                      <div className="font-medium font-bold text-md text-center mr-4 text-red-600">
+                                      <span className="ml-5 font-bold">Use code {show.discountCode} for {show.discountPercentage}% off!</span>
+                                     </div>
+                                     )}
+
+
                                       <Button 
                                         className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(show.ticketAvail)}`}
                                         style={getButtonInlineColors(show.ticketAvail)}
@@ -258,6 +265,12 @@ export function Shows() {
                                       {formatTime(show.time)}
                                     </div>
                                     <div className="col-span-2">
+                                    {show.discountCode && (
+                                      <div className="font-medium font-bold text-md text-center mr-4 text-red-600">
+                                       <span className="ml-5 font-bold">Use code {show.discountCode} for {show.discountPercentage}% off!</span>
+                                      </div>
+                                      )}
+
                                       <Button 
                                         className={`w-full px-4 flex items-center justify-center gap-2 text-sm ${getTicketButtonStyle(show.ticketAvail)}`}
                                         style={getButtonInlineColors(show.ticketAvail)}
@@ -295,10 +308,20 @@ export function Shows() {
                                 <div className="text-lg text-gray-800 w-48">
                                   {groupedShow.venue}
                                 </div>
-                                <div className="text-lg text-gray-800 font-medium w-20 text-right">
+                                <div className="text-lg text-gray-800 font-medium w-12 text-left">
                                   {formatTime(groupedShow.shows[0].time)}
                                 </div>
+                                {groupedShow.shows[0].discountCode && (
+                                          <div className="w-20 font-medium font-bold text-md text-justify text-red-600">
+                                          <span className="font-bold">Use code { groupedShow.shows[0].discountCode} </span>
+                                          <br />
+                                          <span className="font-bold"> for {groupedShow.shows[0].discountPercentage}% off!</span>
+                                         </div>
+                                )}
                               </div>
+                              
+                                    
+
                               <Button 
                                 className={`px-6 flex items-center gap-2 ${getTicketButtonStyle(groupedShow.shows[0].ticketAvail)}`}
                                 style={getButtonInlineColors(groupedShow.shows[0].ticketAvail)}
@@ -333,6 +356,14 @@ export function Shows() {
                                 {formatTime(groupedShow.shows[0].time)}
                               </div>
                               <div className="col-span-2">
+                                {groupedShow.shows[0].discountCode && (
+                                        <div className="font-medium font-bold text-md text-center mr-4 text-red-600">
+                                        <span className="ml-5 font-bold">Use code { groupedShow.shows[0].discountCode} for {groupedShow.shows[0].discountPercentage}% off!</span>
+                                       </div>
+                                       )}
+ 
+ 
+
                                 <Button 
                                   className={`w-full px-4 flex items-center justify-center gap-2 text-sm ${getTicketButtonStyle(groupedShow.shows[0].ticketAvail)}`}
                                   style={getButtonInlineColors(groupedShow.shows[0].ticketAvail)}
