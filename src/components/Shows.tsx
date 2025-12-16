@@ -214,7 +214,7 @@ export function Shows() {
                                         </div>
                                       </div>
                                       {show.discountCode && (
-                                      <div className="font-medium font-bold text-md text-center mr-4 text-red-600">
+                                      <div className="font-medium font-bold text-md text-left mr-4 text-red-600">
                                       <span className="ml-5 font-bold">Use code {show.discountCode} for {show.discountPercentage}% off!</span>
                                      </div>
                                      )}
