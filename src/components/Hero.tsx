@@ -68,17 +68,20 @@ export function Hero() {
             display: "inline-flex",
             alignItems: "center",
             justifyContent: "center",
-            gap: "1.125rem",
+            gap: "clamp(0.45rem, 1.8vw, 1.125rem)",
             width: "auto",
-            padding: "1.35rem 2.4rem",
-            borderRadius: "0.75rem",
+            maxWidth: "min(92vw, 28rem)",
+            padding: "clamp(0.65rem, 2vw, 1.35rem) clamp(1rem, 3.8vw, 2.4rem)",
+            borderRadius: "clamp(0.45rem, 1.2vw, 0.75rem)",
             border: "none",
             cursor: "pointer",
             backgroundColor: "#b91c1c",
             color: "#ffffff",
             fontWeight: 700,
-            fontSize: "2.025rem",
+            fontSize: "clamp(0.95rem, 3.6vw, 2.025rem)",
             letterSpacing: "0.02em",
+            lineHeight: 1.15,
+            whiteSpace: "nowrap",
             boxShadow: "0 10px 25px rgba(0,0,0,0.35)",
           }}
           onMouseEnter={(e) => {
@@ -93,13 +96,20 @@ export function Hero() {
               display: "inline-flex",
               alignItems: "center",
               justifyContent: "center",
-              width: "3rem",
-              height: "3rem",
+              width: "clamp(1.6rem, 5vw, 3rem)",
+              height: "clamp(1.6rem, 5vw, 3rem)",
+              flexShrink: 0,
               borderRadius: "9999px",
               backgroundColor: "rgba(255,255,255,0.2)",
             }}
           >
-            <Play className="h-6 w-6 fill-current" />
+            <Play
+              className="fill-current"
+              style={{
+                width: "clamp(0.85rem, 2.6vw, 1.5rem)",
+                height: "clamp(0.85rem, 2.6vw, 1.5rem)",
+              }}
+            />
           </span>
           Watch Trailer
         </button>
