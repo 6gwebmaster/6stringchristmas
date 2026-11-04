@@ -85,6 +85,26 @@ export function Footer() {
                 </li>
                 <li>
                   <a 
+                    href="#reviews" 
+                    onClick={(e) => { e.preventDefault(); scrollToSection('reviews'); }}
+                    className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
+                    style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
+                  >
+                    Reviews
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="#gallery" 
+                    onClick={(e) => { e.preventDefault(); scrollToSection('gallery'); }}
+                    className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
+                    style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
+                  >
+                    Gallery
+                  </a>
+                </li>
+                <li>
+                  <a 
                     href="#contact" 
                     onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
                     className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"

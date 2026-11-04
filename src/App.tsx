@@ -1,10 +1,9 @@
 import { Header } from "./components/Header";
 import { Hero } from "./components/Hero";
-import { InfoCards } from "./components/InfoCards";
 import { About } from "./components/About";
-import { Gallery } from "./components/Gallery";
-import { Reviews } from "./components/Reviews";
 import { Shows } from "./components/Shows";
+import { Reviews } from "./components/Reviews";
+import { Gallery } from "./components/Gallery";
 import { Contact } from "./components/Contact";
 import { Footer } from "./components/Footer";
 import { Analytics } from "@vercel/analytics/react";
@@ -14,11 +13,10 @@ export default function App() {
     <div className="min-h-screen">
       <Header />
       <Hero />
-      <InfoCards />
       <About />
-      <Gallery />
-      <Reviews />
       <Shows />
+      <Reviews />
+      <Gallery />
       <Contact />
       <Footer />
       <Analytics />
