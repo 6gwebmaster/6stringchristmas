@@ -46,9 +46,10 @@ export function TrailerModal({ open, onClose }: TrailerModalProps) {
       <div
         style={{
           position: "relative",
-          width: "90%",
+          width: "min(90vw, 48rem)",
           maxWidth: "48rem",
           aspectRatio: "16 / 9",
+          maxHeight: "calc(100svh - 2.5rem)",
         }}
         onClick={(event) => event.stopPropagation()}
       >

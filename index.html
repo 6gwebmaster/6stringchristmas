@@ -90,6 +90,40 @@
       html {
         scroll-behavior: smooth;
       }
+      html, body, #root {
+        max-width: 100%;
+        overflow-x: hidden;
+      }
+      /* Phones in landscape are often wider than 768px, so keep the compact layout until both width and height are desktop-sized. */
+      .layout-desktop { display: none; }
+      .layout-mobile { display: block; }
+      .layout-mobile.as-grid { display: grid; }
+      .header-mobile { display: flex; }
+      .header-desktop { display: none; }
+      .about-split { display: grid; grid-template-columns: 1fr; }
+      .footer-grid { display: grid; grid-template-columns: 1fr; }
+      .gallery-stage { height: min(68vw, 420px); }
+      @media (min-width: 1024px) and (min-height: 640px) {
+        .layout-desktop { display: block; }
+        .layout-desktop.layout-row { display: flex; }
+        .layout-mobile, .layout-mobile.as-grid { display: none; }
+        .header-mobile { display: none; }
+        .header-desktop { display: flex; }
+        .about-split { grid-template-columns: 1fr 1fr; }
+        .footer-grid { grid-template-columns: 2fr 1fr 1fr; }
+        .gallery-stage { height: 560px; }
+      }
+      @media (max-height: 520px) {
+        .gallery-stage { height: min(46vh, 240px); }
+        .section-pad { padding-top: 2.5rem; padding-bottom: 2.5rem; }
+        #about { padding-top: 0.75rem; }
+      }
+      @media (max-width: 480px) {
+        .section-title {
+          font-size: 1.7rem !important;
+          letter-spacing: 0.08em !important;
+        }
+      }
     </style>
   </head>
 

@@ -174,7 +174,7 @@ export function Shows() {
                         {hasMultipleShows ? (
                           <>
                             {/* Desktop layout for multiple shows */}
-                            <div className="hidden md:block space-y-4">
+                            <div className="layout-desktop space-y-4">
                               {/* Header row with date, day, location, venue */}
                               <div className="flex items-center gap-8 pb-2 border-b border-gray-200">
                                 <div className="text-xl text-gray-800 font-medium w-16">
@@ -230,7 +230,7 @@ export function Shows() {
                             </div>
                             
                             {/* Mobile layout for multiple shows */}
-                            <div className="md:hidden space-y-4">
+                            <div className="layout-mobile space-y-4">
                               <div className="grid grid-cols-2 gap-4 pb-4 border-b border-gray-200">
                                 <div className="col-span-2 text-xl text-gray-800 font-medium text-center">
                                   {formatDate(groupedShow.date)}
@@ -282,7 +282,7 @@ export function Shows() {
                         ) : (
                           <>
                             {/* Desktop layout for single show */}
-                            <div className="hidden md:flex items-center justify-between">
+                            <div className="layout-desktop layout-row items-center justify-between">
                               <div className="flex items-center gap-8">
                                 <div className="text-xl text-gray-800 font-medium w-16">
                                   {formatDate(groupedShow.date)}
@@ -327,7 +327,7 @@ export function Shows() {
                             </div>
                             
                             {/* Mobile layout for single show */}
-                            <div className="md:hidden grid grid-cols-2 gap-4">
+                            <div className="layout-mobile as-grid grid-cols-2 gap-4">
                               <div className="col-span-2 text-xl text-gray-800 font-medium text-center">
                                 {formatDate(groupedShow.date)}
                               </div>

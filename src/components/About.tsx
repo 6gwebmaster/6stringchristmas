@@ -16,8 +16,7 @@ export function About() {
           <motion.div
             className="text-center mb-16"
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h2
@@ -28,8 +27,7 @@ export function About() {
                 textShadow: "2px 2px 0px rgba(255, 235, 59, 0.9), 3px 3px 0px rgba(255, 223, 0, 0.6)",
               }}
               initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
             >
               About
@@ -63,7 +61,7 @@ export function About() {
           </motion.div>
 
           {/* Content Grid with Animations */}
-          <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+          <div className="about-split gap-12 items-center mb-16">
             {/* Text Content */}
             <motion.div
               className="space-y-6"

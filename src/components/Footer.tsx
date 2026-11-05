@@ -13,9 +13,9 @@ export function Footer() {
       <Snow />
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="footer-grid gap-8">
             {/* Brand */}
-            <div className="md:col-span-2">
+            <div>
               <h3 className="text-2xl mb-4" style={{ fontFamily: '"Mogra", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}>6 String Christmas</h3>
               <p className="text-red-200 mb-4 max-w-md">
                 Creating magical holiday memories through intimate acoustic guitar performances. 

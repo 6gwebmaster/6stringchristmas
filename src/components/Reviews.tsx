@@ -14,7 +14,8 @@ export function Reviews() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () =>
+      setIsMobile(window.innerWidth < 1024 || window.innerHeight < 640);
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -32,10 +33,10 @@ export function Reviews() {
           const swapped = [...data];
           [swapped[allenIdx], swapped[jenniferIdx]] = [swapped[jenniferIdx], swapped[allenIdx]];
           setReviews(swapped);
-          setReviewsToShow(window.innerWidth < 768 ? 6 : swapped.length);
+          setReviewsToShow(window.innerWidth < 1024 || window.innerHeight < 640 ? 6 : swapped.length);
         } else {
           setReviews(data);
-          setReviewsToShow(window.innerWidth < 768 ? 6 : data.length);
+          setReviewsToShow(window.innerWidth < 1024 || window.innerHeight < 640 ? 6 : data.length);
         }
       } catch (error) {
         console.error("Failed to load audience reviews:", error);

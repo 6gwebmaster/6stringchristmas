@@ -81,7 +81,7 @@ export function Header() {
       }`}
       style={{ zIndex: 50 }}
     >
-      <div className="md:hidden w-full px-4 py-2 flex items-center justify-between">
+      <div className="header-mobile w-full px-4 py-2 items-center justify-between">
         <button
           type="button"
           onClick={() => setIsMenuOpen(true)}
@@ -126,7 +126,7 @@ export function Header() {
         <div className="w-10" />
       </div>
 
-      <div className="hidden md:flex container mx-auto px-4 py-2 items-center justify-between">
+      <div className="header-desktop container mx-auto px-4 py-2 items-center justify-between">
         <div className="flex-1" />
 
         <Button
