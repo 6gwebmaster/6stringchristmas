@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Button } from "./ui/button";
+import { cn } from "./ui/utils";
 import { Ticket } from "lucide-react";
 import { motion } from "motion/react";
 import { fetchShows, GroupedShow } from "../services/airtable";
@@ -102,6 +103,33 @@ export function Shows() {
       default:
         return "Get Tickets";
     }
+  };
+
+  const renderTicketLink = (
+    ticketAvail: string | undefined,
+    ticketLink: string | undefined,
+    className: string,
+  ) => {
+    const clickable = isTicketClickable(ticketAvail) && Boolean(ticketLink);
+
+    return (
+      <Button
+        asChild
+        className={cn(className, !clickable && "pointer-events-none")}
+        style={getTicketButtonColors(ticketAvail)}
+      >
+        <a
+          href={clickable ? ticketLink : undefined}
+          target={clickable ? "_blank" : undefined}
+          rel={clickable ? "noopener" : undefined}
+          aria-disabled={clickable ? undefined : true}
+          tabIndex={clickable ? undefined : -1}
+        >
+          <Ticket className="w-4 h-4" />
+          {getTicketButtonText(ticketAvail)}
+        </a>
+      </Button>
+    );
   };
 
   return (
@@ -211,19 +239,11 @@ export function Shows() {
                                      )}
 
 
-                                      <Button 
-                                        className="px-6 flex items-center gap-2 border-0"
-                                        style={getTicketButtonColors(show.ticketAvail)}
-                                        onClick={() => {
-                                          if (isTicketClickable(show.ticketAvail) && show.ticketLink) {
-                                            window.open(show.ticketLink, '_blank');
-                                          }
-                                        }}
-                                        disabled={!isTicketClickable(show.ticketAvail)}
-                                      >
-                                        <Ticket className="w-4 h-4" />
-                                        {getTicketButtonText(show.ticketAvail)}
-                                      </Button>
+                                      {renderTicketLink(
+                                        show.ticketAvail,
+                                        show.ticketLink,
+                                        "px-6 flex items-center gap-2 border-0",
+                                      )}
                                     </div>
                                   ))}
                               </div>
@@ -260,19 +280,11 @@ export function Shows() {
                                       </div>
                                       )}
 
-                                      <Button 
-                                        className="w-full px-4 flex items-center justify-center gap-2 text-sm border-0"
-                                        style={getTicketButtonColors(show.ticketAvail)}
-                                        onClick={() => {
-                                          if (isTicketClickable(show.ticketAvail) && show.ticketLink) {
-                                            window.open(show.ticketLink, '_blank');
-                                          }
-                                        }}
-                                        disabled={!isTicketClickable(show.ticketAvail)}
-                                        >
-                                          <Ticket className="w-4 h-4" />
-                                          {getTicketButtonText(show.ticketAvail)}
-                                        </Button>
+                                      {renderTicketLink(
+                                        show.ticketAvail,
+                                        show.ticketLink,
+                                        "w-full px-4 flex items-center justify-center gap-2 text-sm border-0",
+                                      )}
                                     </div>
                                   </div>
                                 ))}
@@ -310,20 +322,11 @@ export function Shows() {
                               
                                     
 
-                              <Button 
-                                className="px-6 flex items-center gap-2 border-0"
-                                style={getTicketButtonColors(groupedShow.shows[0].ticketAvail)}
-                                onClick={() => {
-                                  const show = groupedShow.shows[0];
-                                  if (isTicketClickable(show.ticketAvail) && show.ticketLink) {
-                                    window.open(show.ticketLink, '_blank');
-                                  }
-                                }}
-                                disabled={!isTicketClickable(groupedShow.shows[0].ticketAvail)}
-                              >
-                                <Ticket className="w-4 h-4" />
-                                {getTicketButtonText(groupedShow.shows[0].ticketAvail)}
-                              </Button>
+                              {renderTicketLink(
+                                groupedShow.shows[0].ticketAvail,
+                                groupedShow.shows[0].ticketLink,
+                                "px-6 flex items-center gap-2 border-0",
+                              )}
                             </div>
                             
                             {/* Mobile layout for single show */}
@@ -352,20 +355,11 @@ export function Shows() {
  
  
 
-                                <Button 
-                                  className="w-full px-4 flex items-center justify-center gap-2 text-sm border-0"
-                                  style={getTicketButtonColors(groupedShow.shows[0].ticketAvail)}
-                                  onClick={() => {
-                                    const show = groupedShow.shows[0];
-                                    if (isTicketClickable(show.ticketAvail) && show.ticketLink) {
-                                      window.open(show.ticketLink, '_blank');
-                                    }
-                                  }}
-                                  disabled={!isTicketClickable(groupedShow.shows[0].ticketAvail)}
-                                >
-                                  <Ticket className="w-4 h-4" />
-                                  {getTicketButtonText(groupedShow.shows[0].ticketAvail)}
-                                </Button>
+                                {renderTicketLink(
+                                  groupedShow.shows[0].ticketAvail,
+                                  groupedShow.shows[0].ticketLink,
+                                  "w-full px-4 flex items-center justify-center gap-2 text-sm border-0",
+                                )}
                               </div>
                             </div>
                           </>
