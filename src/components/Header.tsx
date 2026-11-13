@@ -58,7 +58,7 @@ export function Header() {
 
   return (
     <header
-      className="site-header fixed top-0 left-0 right-0 z-50 bg-white border-b border-red-100"
+      className="site-header z-50 bg-white border-b border-red-100"
       style={{ zIndex: 50, backgroundColor: "#ffffff" }}
     >
       <div className="header-mobile site-header-row" style={{ position: "relative" }}>

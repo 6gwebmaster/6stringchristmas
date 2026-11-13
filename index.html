@@ -109,15 +109,22 @@
       .layout-mobile.as-grid { display: grid; }
       .header-mobile { display: flex; }
       .header-desktop { display: none; }
-      /* Match Six Guitars sticky header: 72px mobile / 92px desktop (px-6 py-4) */
-      .site-header {
-        box-sizing: border-box;
-        height: 72px;
-        padding: 1rem 1.5rem;
+      /* Sticky header sits in normal flow so the hero starts fully below it */
+      :root {
+        --site-header-height: 72px;
       }
-      /* Push page content below the fixed opaque header */
+      .site-header {
+        position: sticky;
+        top: 0;
+        box-sizing: border-box;
+        height: var(--site-header-height);
+        padding: 1rem 1.5rem;
+        overflow: hidden; /* keep tickets/logo from spilling onto the hero */
+        background-color: #ffffff;
+      }
+      /* Hero starts flush with the bottom of the sticky header (no gap) */
       #home {
-        margin-top: 72px;
+        margin-top: 0;
       }
       .site-header-row {
         height: 100%;
@@ -147,6 +154,8 @@
         flex-shrink: 0;
       }
       @media (min-width: 640px) {
+        /* Taller tickets CTA needs a taller header so it doesn't spill onto the hero */
+        :root { --site-header-height: 84px; }
         .header-tickets-btn {
           padding: 0.75rem 2rem;
           font-size: 1.125rem;
@@ -158,8 +167,7 @@
         }
       }
       @media (min-width: 768px) {
-        .site-header { height: 92px; }
-        #home { margin-top: 92px; }
+        :root { --site-header-height: 92px; }
         html { scroll-padding-top: 104px; } /* 92px header + 12px gap */
         #about,
         #shows,

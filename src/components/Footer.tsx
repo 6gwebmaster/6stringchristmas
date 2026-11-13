@@ -1,5 +1,3 @@
-import { Snow } from "./Snow";
-
 export function Footer() {
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -10,7 +8,6 @@ export function Footer() {
 
   return (
     <footer className="relative bg-red-900 text-white py-12 z-[1]">
-      <Snow />
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           <div className="footer-grid gap-8">

@@ -1,7 +1,6 @@
 import { motion } from "motion/react";
 import { useEffect, useState, type CSSProperties } from "react";
 import { CalendarDays, Play } from "lucide-react";
-import { Snow } from "./Snow";
 import { TrailerModal } from "./TrailerModal";
 
 type Viewport = "desktop" | "portrait" | "landscape";
@@ -35,12 +34,12 @@ export function Hero() {
     ? "/videos/Hero%20Loop%201920x720.mp4"
     : "/videos/Hero%20Loop%20720x1040.mp4";
 
-  // Shorten mobile hero so About title + first line are visible below the CTAs.
+  // Mobile hero tall enough that object-cover crops less of the portrait video (keeps head in frame).
   const heroHeight = isDesktop
     ? "calc(100vh - 190px)"
     : isLandscape
-      ? "calc(100svh - 300px)"
-      : "calc(100svh - 360px)";
+      ? "calc(100svh - 280px)"
+      : "calc(100svh - 280px)";
 
   const scrollToShows = () => {
     document.getElementById("shows")?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -137,6 +136,10 @@ export function Hero() {
           <video
             key={videoSrc}
             className="h-full w-full object-cover"
+            style={{
+              // Prefer the upper frame on mobile so object-cover keeps the head
+              objectPosition: isDesktop ? "center center" : "center 0%",
+            }}
             src={videoSrc}
             autoPlay
             muted
@@ -146,8 +149,6 @@ export function Hero() {
           />
           <div className="absolute inset-0 bg-black/20" />
         </div>
-
-        <Snow />
 
         <div
           className="relative z-10 flex h-full w-full flex-col items-center px-4"
