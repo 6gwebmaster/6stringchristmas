@@ -9,18 +9,18 @@ export function About() {
   const [showTrailer, setShowTrailer] = useState(false);
 
   return (
-    <section id="about" className="pt-20 pb-20 bg-gradient-to-br from-red-50 via-white to-green-50 relative overflow-hidden">
+    <section id="about" className="pt-6 md:pt-20 pb-20 bg-gradient-to-br from-red-50 via-white to-green-50 relative overflow-hidden">
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
           {/* Animated Header */}
           <motion.div
-            className="text-center mb-16"
+            className="text-center mb-8 md:mb-16"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
             <motion.h2
-              className="text-4xl md:text-5xl mb-8 text-red-800 uppercase font-bold"
+              className="text-4xl md:text-5xl mb-4 md:mb-8 text-red-800 uppercase font-bold"
               style={{
                 fontFamily: '"Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif',
                 letterSpacing: "0.15em",
@@ -33,7 +33,7 @@ export function About() {
               About
             </motion.h2>
             <motion.p
-              className="text-2xl text-gray-700 max-w-3xl mx-auto font-medium mb-10"
+              className="text-2xl text-gray-700 max-w-3xl mx-auto font-medium mb-6 md:mb-10"
               style={{ fontFamily: '"Mogra", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}

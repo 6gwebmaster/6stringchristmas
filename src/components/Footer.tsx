@@ -136,7 +136,7 @@ export function Footer() {
 
           <div className="border-t border-red-800 mt-8 pt-8 text-center">
             <p className="text-red-200">
-              © 2024 6 String Christmas. All rights reserved. | 
+              © 2026 6 String Christmas. All rights reserved. | 
               <span className="ml-2">Spreading holiday joy one song at a time.</span>
             </p>
           </div>
