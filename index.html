@@ -89,10 +89,19 @@
     <style>
       html {
         scroll-behavior: smooth;
+        /* Offset fixed header so in-page nav doesn't cover section titles */
+        scroll-padding-top: 84px; /* 72px header + 12px gap */
       }
       html, body, #root {
         max-width: 100%;
         overflow-x: hidden;
+      }
+      #about,
+      #shows,
+      #reviews,
+      #gallery,
+      #contact {
+        scroll-margin-top: 84px;
       }
       /* Phones in landscape are often wider than 768px, so keep the compact layout until both width and height are desktop-sized. */
       .layout-desktop { display: none; }
@@ -151,6 +160,14 @@
       @media (min-width: 768px) {
         .site-header { height: 92px; }
         #home { margin-top: 92px; }
+        html { scroll-padding-top: 104px; } /* 92px header + 12px gap */
+        #about,
+        #shows,
+        #reviews,
+        #gallery,
+        #contact {
+          scroll-margin-top: 104px;
+        }
       }
       .about-split { display: grid; grid-template-columns: 1fr; }
       .footer-grid { display: grid; grid-template-columns: 1fr; }
