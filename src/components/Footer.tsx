@@ -13,9 +13,9 @@ export function Footer() {
       <Snow />
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="footer-grid gap-8">
             {/* Brand */}
-            <div className="md:col-span-2">
+            <div>
               <h3 className="text-2xl mb-4" style={{ fontFamily: '"Mogra", "Trebuchet MS", "Lucida Grande", "Lucida Sans Unicode", sans-serif' }}>6 String Christmas</h3>
               <p className="text-red-200 mb-4 max-w-md">
                 Creating magical holiday memories through intimate acoustic guitar performances. 
@@ -85,6 +85,26 @@ export function Footer() {
                 </li>
                 <li>
                   <a 
+                    href="#reviews" 
+                    onClick={(e) => { e.preventDefault(); scrollToSection('reviews'); }}
+                    className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
+                    style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
+                  >
+                    Reviews
+                  </a>
+                </li>
+                <li>
+                  <a 
+                    href="#gallery" 
+                    onClick={(e) => { e.preventDefault(); scrollToSection('gallery'); }}
+                    className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
+                    style={{ cursor: 'pointer', pointerEvents: 'auto', display: 'inline-block' }}
+                  >
+                    Gallery
+                  </a>
+                </li>
+                <li>
+                  <a 
                     href="#contact" 
                     onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}
                     className="text-red-200 hover:text-yellow-400 hover:scale-110 hover:font-bold transition-all duration-200 cursor-pointer"
@@ -116,7 +136,7 @@ export function Footer() {
 
           <div className="border-t border-red-800 mt-8 pt-8 text-center">
             <p className="text-red-200">
-              © 2024 6 String Christmas. All rights reserved. | 
+              © 2026 6 String Christmas. All rights reserved. | 
               <span className="ml-2">Spreading holiday joy one song at a time.</span>
             </p>
           </div>

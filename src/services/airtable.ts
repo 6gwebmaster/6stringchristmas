@@ -1,9 +1,27 @@
-import Airtable from 'airtable';
+import Airtable from "airtable";
 
-// Initialize Airtable
-const base = new Airtable({
-  apiKey: import.meta.env.VITE_AIRTABLE_API_KEY
-}).base(import.meta.env.VITE_AIRTABLE_BASE_ID);
+const showsApiKey =
+  import.meta.env.VITE_AIRTABLE_API_KEY ||
+  import.meta.env.VITE_AIRTABLE_PERSONAL_ACCESS_TOKEN;
+
+const audienceApiKey =
+  import.meta.env.VITE_AIRTABLE_PERSONAL_ACCESS_TOKEN ||
+  import.meta.env.VITE_AIRTABLE_API_KEY;
+
+const showsBaseId = import.meta.env.VITE_AIRTABLE_BASE_ID;
+const audienceReviewsBaseId = import.meta.env.VITE_AIRTABLE_AUDIENCE_REVIEWS_BASE_ID;
+// Audience reviews live in the audience-reviews Airtable base.
+// Table name in Airtable is "Reviews" (same as 6G); filter by Select = 6SC.
+const audienceReviewsTableName =
+  import.meta.env.VITE_AIRTABLE_AUDIENCE_REVIEWS_TABLE_NAME || "Reviews";
+
+const showsBase = showsApiKey && showsBaseId
+  ? new Airtable({ apiKey: showsApiKey }).base(showsBaseId)
+  : null;
+
+const audienceBase = audienceApiKey && audienceReviewsBaseId
+  ? new Airtable({ apiKey: audienceApiKey }).base(audienceReviewsBaseId)
+  : null;
 
 export interface Show {
   id: string;
@@ -19,6 +37,7 @@ export interface Show {
   onSaleDate: string;
   discountCode?: string;
   discountPercentage?: string;
+  enabledForSite: boolean;
 }
 
 export interface GroupedShow {
@@ -29,88 +48,113 @@ export interface GroupedShow {
   shows: Show[];
 }
 
+export interface AudienceReview {
+  id: string;
+  name: string;
+  quote: string;
+  photo: string | null;
+  select: string;
+}
+
 export async function fetchShows(): Promise<GroupedShow[]> {
   try {
-    console.log('🔍 Fetching shows from Airtable...');
-    console.log('API Key:', import.meta.env.VITE_AIRTABLE_API_KEY ? 'Set' : 'Missing');
-    console.log('Base ID:', import.meta.env.VITE_AIRTABLE_BASE_ID ? 'Set' : 'Missing');
-    
-    const records = await base('Shows').select({
-      filterByFormula: `{ShowName} = "6 String Christmas"`,
-      sort: [{ field: 'date', direction: 'asc' }]
-    }).all();
-    
-    console.log('📊 Records found:', records.length);
+    if (!showsBase) {
+      console.error("Missing Airtable Shows credentials");
+      return [];
+    }
 
-    const allShows: Show[] = records.map(record => {
-      const dateTimeString = record.get('Date_for_site') as string;
-      console.log('📅 Raw Date_for_site field:', dateTimeString);
-      
+    const records = await showsBase("Shows")
+      .select({
+        filterByFormula: 'AND({ShowName} = "6 String Christmas", {Enabled_For_Site} = TRUE())',
+        sort: [{ field: "Date_for_site", direction: "asc" }],
+      })
+      .all();
+
+    const allShows: Show[] = records.map((record) => {
+      const dateTimeString = record.get("Date_for_site") as string;
+      const fullBand = record.get("fullBand");
+
       return {
         id: record.id,
         date: dateTimeString,
-        day: record.get('Day') as string,
-        time: record.get('Time') as string, // Get time from separate Time field
-        showName: record.get('ShowName') as string,
-        venue: record.get('Venue') as string,
-        location: record.get('location') as string,
-        ticketLink: record.get('ticketLink') as string,
-        fullBand: record.get('fullBand') as boolean,
-        ticketAvail: record.get('Ticket Avail') as string,
-        onSaleDate: record.get('On Sale Date') as string,
-        discountCode: record.get('Discount Code') as string,
-        discountPercentage: record.get('Discount Percentage') as string,  
-
+        day: record.get("Day") as string,
+        time: record.get("Time") as string,
+        showName: record.get("ShowName") as string,
+        venue: record.get("Venue") as string,
+        location: record.get("location") as string,
+        ticketLink: record.get("ticketLink") as string,
+        fullBand: fullBand === true || fullBand === "Yes" || fullBand === "yes",
+        ticketAvail: (record.get("Ticket Avail") as string) || "available",
+        onSaleDate: record.get("On Sale Date") as string,
+        discountCode: record.get("Discount Code") as string,
+        discountPercentage: record.get("Discount Percentage") as string,
+        enabledForSite: record.get("Enabled_For_Site") === true,
       };
     });
 
-    // Filter out past shows - only show today's shows and future shows
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // Set to start of today
-    
-    const shows = allShows.filter(show => {
+    today.setHours(0, 0, 0, 0);
+
+    const shows = allShows.filter((show) => {
+      if (!show.date) return false;
       const showDate = new Date(show.date);
-      showDate.setHours(0, 0, 0, 0); // Compare dates only, not times
+      if (Number.isNaN(showDate.getTime())) return true;
+      showDate.setHours(0, 0, 0, 0);
       return showDate >= today;
     });
-    
-    console.log(`📊 Filtered shows: ${shows.length} upcoming out of ${allShows.length} total`);
 
-    // Group shows by date and venue
     const groupedShows: { [key: string]: GroupedShow } = {};
-    
-    shows.forEach(show => {
-      // Normalize date to just the date part (YYYY-MM-DD) for grouping
-      const normalizedDate = new Date(show.date).toISOString().split('T')[0];
+
+    shows.forEach((show) => {
+      const normalizedDate = new Date(show.date).toISOString().split("T")[0];
       const key = `${normalizedDate}-${show.venue}`;
-      console.log('🔑 Grouping key:', key, 'for show:', {
-        id: show.id,
-        date: show.date,
-        day: show.day,
-        venue: show.venue,
-        location: show.location,
-        time: show.time
-      });
       if (!groupedShows[key]) {
-        console.log('📝 Creating new group for key:', key);
         groupedShows[key] = {
           date: show.date,
           day: show.day,
           venue: show.venue,
           location: show.location,
-          shows: []
+          shows: [],
         };
-      } else {
-        console.log('➕ Adding to existing group for key:', key);
       }
       groupedShows[key].shows.push(show);
     });
 
-    console.log('📊 Final grouped shows:', Object.values(groupedShows));
-
     return Object.values(groupedShows);
   } catch (error) {
-    console.error('Error fetching shows from Airtable:', error);
+    console.error("Error fetching shows from Airtable:", error);
+    return [];
+  }
+}
+
+export async function fetchAudienceReviews(): Promise<AudienceReview[]> {
+  try {
+    if (!audienceBase) {
+      console.error("Missing Airtable Audience Reviews credentials");
+      return [];
+    }
+
+    const records = await audienceBase(audienceReviewsTableName)
+      .select({
+        filterByFormula: "FIND('6SC', {Select})",
+      })
+      .all();
+
+    return records.map((record) => {
+      const photoField = record.get("Photo") as Array<{ url: string }> | undefined;
+      const photo =
+        Array.isArray(photoField) && photoField.length > 0 ? photoField[0].url : null;
+
+      return {
+        id: record.id,
+        name: (record.get("Name") as string) || "",
+        quote: (record.get("Quote") as string) || "",
+        photo,
+        select: (record.get("Select") as string) || "",
+      };
+    });
+  } catch (error) {
+    console.error("Error fetching audience reviews from Airtable:", error);
     return [];
   }
 }

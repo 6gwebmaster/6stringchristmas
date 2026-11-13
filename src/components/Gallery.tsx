@@ -158,7 +158,7 @@ export function Gallery() {
             transition={{ duration: 0.8, delay: 0.6 }}
           >
             <Card className="overflow-hidden shadow-2xl border-red-200">
-              <div className="relative h-[500px] md:h-[600px]">
+              <div className="gallery-stage relative">
                 <img
                   src={images[currentIndex].src}
                   alt={images[currentIndex].alt}
