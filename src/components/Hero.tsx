@@ -153,7 +153,7 @@ export function Hero() {
         <div
           className="relative z-10 flex h-full w-full flex-col items-center px-4"
           style={{
-            justifyContent: isDesktop ? "flex-end" : "center",
+            justifyContent: isLandscape ? "center" : "flex-end",
             paddingTop: isDesktop ? "1rem" : "0.75rem",
             paddingBottom: isDesktop ? "2.25rem" : "0.75rem",
             boxSizing: "border-box",
@@ -170,8 +170,10 @@ export function Hero() {
                   ? "min(46vw, 280px)"
                   : "min(88vw, 460px)",
               maxWidth: "100%",
+              // Desktop matches the latest push: above the buttons, marginBottom 1.5rem.
+              // Portrait sits 20px above the bottom of the hero. Landscape stays centered.
               marginTop: isDesktop ? "auto" : 0,
-              marginBottom: isDesktop ? "1.5rem" : 0,
+              marginBottom: isDesktop ? "1.5rem" : isLandscape ? 0 : "20px",
             }}
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
